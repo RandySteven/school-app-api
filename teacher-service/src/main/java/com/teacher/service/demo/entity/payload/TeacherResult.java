@@ -16,7 +16,7 @@ public class TeacherResult {
         this.teacherEmail = teacher.getTeacherEmail();
         this.teacherPhoneNumber = teacher.getTeacherPhoneNumber();
         this.teacherAddress = teacher.getTeacherAddress();
-        this.url = "http://localhost:8080/v1/teachers/"+teacher.getTeacherId();
+        this.url = "http://localhost:8081/v1/teachers/"+teacher.getTeacherId();
     }
 
 }

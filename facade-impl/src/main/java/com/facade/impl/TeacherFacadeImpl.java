@@ -58,7 +58,11 @@ public class TeacherFacadeImpl implements TeacherFacade {
 
     @Override
     public Teacher getTeacherByTeacherId(String teacherId) {
-        return null;
+        Teacher teacher = teacherService.getTeacherByTeacherId(teacherId);
+        if(teacher.getDeletedAt() != null){
+            return null;
+        }
+        return teacher;
     }
 
     @Override

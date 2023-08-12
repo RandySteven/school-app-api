@@ -12,7 +12,9 @@
         <module>student-service</module>
         <module>common-util</module>
         <module>teacher-service</module>
+        <module>course-service</module>
         <module>facade-impl</module>
+        <module>main-application</module>
     </modules>
 
     <properties>

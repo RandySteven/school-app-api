@@ -1,5 +1,7 @@
 package com.module.common.utils;
 
+import com.course.service.demo.entity.model.Course;
+import com.course.service.demo.enums.Grade;
 import com.student.service.demo.entity.payloads.StudentRequest;
 import com.teacher.service.demo.entity.payload.TeacherRequest;
 import org.slf4j.Logger;
@@ -73,6 +75,16 @@ public class VelocityUtil implements Serializable {
         return builder.toString();
     }
 
+    public String generateDigitsNumber(int len){
+        String number = "0123456789";
+        StringBuilder builder = new StringBuilder(len);
+        for(int i = 0 ; i < len ; i++){
+            char charIndex = number.charAt((int)(Math.random() * number.length()));
+            builder.append(charIndex);
+        }
+        return builder.toString();
+    }
+
     /**
      * @getCurrentDateTime()
      * get current date time when u hit A.P.I
@@ -138,4 +150,19 @@ public class VelocityUtil implements Serializable {
         String studentId = "STD" + year + requestedTotalStr + convertDateToDDMMYYYY(teacherRequest.getTeacherDob(), "-") + convertDateToDDMMYYYY(currDate, "/");
         return studentId;
     }
+
+    /**
+     *
+     * @param course
+     * courseId = CRS + (first 3 chars from course name) + (grade / level [09|10|11|12]) + randomDigits(6)
+     * sample :
+     * courseId = CRSMAT10123456
+     * @return
+     */
+    public String generateCourseId(Course course, Grade grade){
+        String firstThreeChars = course.getCourseName().substring(0, 3);
+        String courseId = "CRS" + firstThreeChars + grade.getNumber() + generateDigitsNumber(6);
+        return courseId;
+    }
+
 }

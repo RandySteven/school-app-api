@@ -3,7 +3,9 @@ package com.teacher.service.demo.controllers;
 import com.module.common.utils.ResponseUtil;
 import com.module.common.utils.SecurityUtil;
 import com.module.common.utils.VelocityUtil;
+import com.teacher.service.demo.entity.model.Teacher;
 import com.teacher.service.demo.entity.payload.TeacherRequest;
+import com.teacher.service.demo.entity.payload.TeacherResult;
 import com.teacher.service.demo.facades.TeacherFacade;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -64,7 +67,32 @@ public class TeacherController implements Serializable {
 
     @GetMapping(GET_ALL_TEACHERS_ENDPOINT)
     public ResponseEntity<Map<String, Object>> getAllTeachers(){
+        List<TeacherResult> teacherResults = teacherFacade.getAllTeachers();
+        Map<String, Object> dataItem = new HashMap<>();
+        boolean success = true;
+        HttpStatus status = HttpStatus.OK;
+        if(teacherResults.isEmpty()){
+            dataItem.put("message", "Teachers data still empty");
+        }
+        dataItem.put("teachers", teacherResults);
+        JSONObject response = ru.responseJSON(status, "dataItem", dataItem, success);
+        responseEntity = ResponseEntity.ok().body(response.toMap());
+        return responseEntity;
+    }
 
+    @GetMapping(GET_TEACHER_BY_TEACHER_ID)
+    public ResponseEntity<Map<String, Object>> getTeacherByTeacherId(String teacherId){
+        Teacher teacher = teacherFacade.getTeacherByTeacherId(teacherId);
+        HttpStatus status = HttpStatus.OK;
+        boolean success = true;
+        Map<String, Object> dataItem = new HashMap<>();
+        if(teacher == null){
+            status = HttpStatus.NOT_FOUND;
+            dataItem.put("message", "Teacher is not found");
+        }
+        dataItem.put("teacher", teacher);
+        JSONObject response = ru.responseJSON(status, "dataItem", dataItem, success);
+        responseEntity = ResponseEntity.ok().body(response.toMap());
         return responseEntity;
     }
 
