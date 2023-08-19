@@ -2,7 +2,6 @@ package com.module.common.utils;
 
 import com.course.service.demo.entity.model.Course;
 import com.course.service.demo.enums.Grade;
-import com.student.service.demo.entity.payloads.StudentRequest;
 import com.teacher.service.demo.entity.payload.TeacherRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,36 +30,6 @@ public class VelocityUtil implements Serializable {
         return null;
     }
 
-
-    /**
-     * @StudentId
-     * <h2>rules :</h2>
-     * <ol>
-     * <li>4 first digits is current year => 2023</li>
-     * <li>3 digits is the increment of register student => 001 --> 999 : max 999 students</li>
-     * <li>next 6 digits is student dd/mm/yy => 110401</li>
-     * <li>6 is current date 290723 when admin input the data</li>
-     * <li>STD2023001110401290723</li>
-     * </ol>
-     */
-    public String generateStudentId(StudentRequest studentRequest, int totalRequestedStudent){
-        String year = getCurrentYear();
-        String currDate = getCurrentDateTime();
-        String requestedTotalStr = "";
-        if(totalRequestedStudent < 10){
-            requestedTotalStr = "00" + totalRequestedStudent;
-        }else if(totalRequestedStudent >= 10 && totalRequestedStudent < 100){
-            requestedTotalStr =  "0" + totalRequestedStudent;
-        }else if(totalRequestedStudent >= 100 && totalRequestedStudent <= 999){
-            requestedTotalStr =  "" + totalRequestedStudent;
-        }else{
-            return "";
-        }
-        Date date = getDateRequest(studentRequest.getStudentDob());
-        String dateStr = date.toString();
-        String studentId = "STD" + year + requestedTotalStr + convertDateToDDMMYYYY(studentRequest.getStudentDob(), "-") + convertDateToDDMMYYYY(currDate, "/");
-        return studentId;
-    }
 
     public String generateAlphaNumeric(int length){
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";

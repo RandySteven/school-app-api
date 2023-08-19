@@ -9,8 +9,11 @@ import com.student.service.demo.enums.StudentStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class StudentUtil {
@@ -19,9 +22,40 @@ public class StudentUtil {
         return new StudentUtil();
     }
 
-    VelocityUtil vu = VelocityUtil.getInstance();
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StudentUtil.class);
+
+    private VelocityUtil vu = VelocityUtil.getInstance();
+
+    /**
+     * @StudentId
+     * <h2>rules :</h2>
+     * <ol>
+     * <li>4 first digits is current year => 2023</li>
+     * <li>3 digits is the increment of register student => 001 --> 999 : max 999 students</li>
+     * <li>next 6 digits is student dd/mm/yy => 110401</li>
+     * <li>6 is current date 290723 when admin input the data</li>
+     * <li>STD2023001110401290723</li>
+     * </ol>
+     */
+    public String generateStudentId(StudentRequest studentRequest, int totalRequestedStudent){
+        String year = vu.getCurrentYear();
+        String currDate = vu.getCurrentDateTime();
+        String requestedTotalStr = "";
+        if(totalRequestedStudent < 10){
+            requestedTotalStr = "00" + totalRequestedStudent;
+        }else if(totalRequestedStudent >= 10 && totalRequestedStudent < 100){
+            requestedTotalStr =  "0" + totalRequestedStudent;
+        }else if(totalRequestedStudent >= 100 && totalRequestedStudent <= 999){
+            requestedTotalStr =  "" + totalRequestedStudent;
+        }else{
+            return "";
+        }
+        Date date = vu.getDateRequest(studentRequest.getStudentDob());
+        String dateStr = date.toString();
+        String studentId = "STD" + year + requestedTotalStr + vu.convertDateToDDMMYYYY(studentRequest.getStudentDob(), "-") + vu.convertDateToDDMMYYYY(currDate, "/");
+        return studentId;
+    }
 
     public Student studentRequestToStudentModel(StudentRequest studentRequest){
         return new StudentBuilder().build()

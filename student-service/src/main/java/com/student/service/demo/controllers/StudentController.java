@@ -1,8 +1,5 @@
 package com.student.service.demo.controllers;
 
-import com.module.common.utils.ResponseUtil;
-import com.module.common.utils.SecurityUtil;
-import com.module.common.utils.VelocityUtil;
 import com.student.service.demo.entity.models.Student;
 import com.student.service.demo.entity.payloads.StudentRequest;
 import com.student.service.demo.entity.payloads.result.StudentResult;
@@ -34,12 +31,8 @@ public class StudentController {
     Map<String, Object> responseMap;
 
     ResponseEntity<Map<String, Object>> responseEntity;
-
-    SecurityUtil su = SecurityUtil.getInstance();
-
-    VelocityUtil vu = VelocityUtil.getInstance();
-
-    ResponseUtil ru = ResponseUtil.getInstance();
+    
+//    ResponseUtil ru = ResponseUtil.getInstance();
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StudentController.class);
 
@@ -66,8 +59,12 @@ public class StudentController {
         HttpStatus status = HttpStatus.CREATED;
         Map<String, String> dataItem = new HashMap<>();
         dataItem.put("studentId", studentId);
-        JSONObject response = ru.responseJSON(status, "dataItem", dataItem, success);
-        responseEntity = ResponseEntity.status(status).body(response.toMap());
+
+        responseMap.put("status", status);
+        responseMap.put("dataItem", dataItem);
+        responseMap.put("success", success);
+
+        responseEntity = ResponseEntity.status(status).body(responseMap);
         return responseEntity;
     }
 
@@ -76,8 +73,12 @@ public class StudentController {
         List<StudentResult> studentList = studentFacade.getAllStudentsResults();
         boolean success = true;
         HttpStatus status = HttpStatus.OK;
-        JSONObject response = ru.responseJSON(status, "students", studentList, success);
-        responseEntity = ResponseEntity.ok().body(response.toMap());
+
+        responseMap.put("status", status);
+        responseMap.put("students", studentList);
+        responseMap.put("success", success);
+
+        responseEntity = ResponseEntity.ok().body(responseMap);
         return responseEntity;
     }
 
@@ -86,9 +87,12 @@ public class StudentController {
         String studentId = studentFacade.backupStudentFromStudentRequest(requestId);
         boolean success = true;
         HttpStatus status = HttpStatus.CREATED;
-        JSONObject response = ru.responseJSON(status, "studentId", studentId, success);
 
-        responseEntity = ResponseEntity.status(status).body(response.toMap());
+        responseMap.put("status", status);
+        responseMap.put("dataItem", studentId);
+        responseMap.put("success", success);
+
+        responseEntity = ResponseEntity.status(status).body(responseMap);
         return responseEntity;
     }
 
@@ -102,8 +106,12 @@ public class StudentController {
         Student student = studentFacade.getStudentByStudentId(studentId);
         boolean success = true;
         HttpStatus status = HttpStatus.OK;
-        JSONObject response = ru.responseJSON(status, "student", student, success);
-        responseEntity = ResponseEntity.ok().body(response.toMap());
+        
+        responseMap.put("status", status);
+        responseMap.put("student", student);
+        responseMap.put("success", success);
+        
+        responseEntity = ResponseEntity.ok().body(responseMap);
         return responseEntity;
     }
 

@@ -43,7 +43,7 @@ public class StudentFacadeImpl implements StudentFacade {
         LOGGER.info("===== studentRequestList : " + new JSONObject(studentRequestList));
         StudentRequest studentRequest = studentUtil.getStudentRequestByStudentId(studentRequestList, id);
         int total = studentRequestService.getAllStudentRequestsSize();
-        String studentId = vu.generateStudentId(studentRequest, total);
+        String studentId = studentUtil.generateStudentId(studentRequest, total);
         Student student = studentUtil.studentRequestToStudentModel(studentRequest)
                 .setStudentId(studentId);
         studentService.registerStudent(student);
@@ -57,7 +57,7 @@ public class StudentFacadeImpl implements StudentFacade {
         int total = studentRequestService.getAllStudentRequestsSize();
         LOGGER.info("==== requestId : " + studentRequest.getRequestId());
         LOGGER.info("==== request : "+ new JSONObject(studentRequest));
-        String studentId = vu.generateStudentId(studentRequest, total);
+        String studentId = studentUtil.generateStudentId(studentRequest, total);
         Student student = studentUtil.studentRequestToStudentModel(studentRequest)
                 .setStudentId(studentId);
         studentService.registerStudent(student);

@@ -1,6 +1,5 @@
 package com.student.service.demo.services.impl;
 
-import com.module.common.utils.VelocityUtil;
 import com.student.service.demo.entity.payloads.StudentRequest;
 import com.student.service.demo.repositories.mongodb.StudentRequestRepository;
 import com.student.service.demo.services.StudentRequestService;
@@ -15,8 +14,6 @@ public class StudentRequestServiceImpl implements StudentRequestService {
 
     @Autowired
     StudentRequestRepository studentRequestRepository;
-
-    VelocityUtil vu = VelocityUtil.getInstance();
 
 
     @Override
