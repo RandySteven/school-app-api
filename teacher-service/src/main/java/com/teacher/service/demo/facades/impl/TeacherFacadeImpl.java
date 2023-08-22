@@ -1,4 +1,4 @@
-package com.facade.impl;
+package com.teacher.service.demo.facades.impl;
 
 import com.module.common.utils.VelocityUtil;
 import com.teacher.service.demo.entity.model.Teacher;
@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class TeacherFacadeImpl implements TeacherFacade {
-
     @Autowired
     TeacherRequestService teacherRequestService;
 
@@ -38,7 +37,7 @@ public class TeacherFacadeImpl implements TeacherFacade {
         teacherRequest.setTeacherRequestStatus(TeacherRequestStatus.PENDING);
         teacherRequestService.sendTeacherRequest(teacherRequest);
         Teacher teacher = teacherUtil.teacherRequestToTeacherModel(teacherRequest);
-        String teacherId = velocityUtil.generateTeacherId(teacherRequest, teacherRequestService.getAllTeacherRequests().size());
+        String teacherId = teacherUtil.generateTeacherId(teacherRequest, teacherRequestService.getAllTeacherRequests().size());
         teacher.setTeacherId(teacherId);
         teacherService.registerNewTeacher(teacher);
         if(teacher.getTeacherId().length()!=0){

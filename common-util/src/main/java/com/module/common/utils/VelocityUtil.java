@@ -1,8 +1,6 @@
 package com.module.common.utils;
 
-import com.course.service.demo.entity.model.Course;
-import com.course.service.demo.enums.Grade;
-import com.teacher.service.demo.entity.payload.TeacherRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -101,37 +99,5 @@ public class VelocityUtil implements Serializable {
         return String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
     }
 
-    public String generateTeacherId(TeacherRequest teacherRequest, int totalRequestedTeacher){
-        String year = getCurrentYear();
-        String currDate = getCurrentDateTime();
-        String requestedTotalStr = "";
-        if(totalRequestedTeacher < 10){
-            requestedTotalStr = "00" + totalRequestedTeacher;
-        }else if(totalRequestedTeacher >= 10 && totalRequestedTeacher < 100){
-            requestedTotalStr =  "0" + totalRequestedTeacher;
-        }else if(totalRequestedTeacher >= 100 && totalRequestedTeacher <= 999){
-            requestedTotalStr =  "" + totalRequestedTeacher;
-        }else{
-            return "";
-        }
-        Date date = getDateRequest(teacherRequest.getTeacherDob());
-        String dateStr = date.toString();
-        String studentId = "STD" + year + requestedTotalStr + convertDateToDDMMYYYY(teacherRequest.getTeacherDob(), "-") + convertDateToDDMMYYYY(currDate, "/");
-        return studentId;
-    }
-
-    /**
-     *
-     * @param course
-     * courseId = CRS + (first 3 chars from course name) + (grade / level [09|10|11|12]) + randomDigits(6)
-     * sample :
-     * courseId = CRSMAT10123456
-     * @return
-     */
-    public String generateCourseId(Course course, Grade grade){
-        String firstThreeChars = course.getCourseName().substring(0, 3);
-        String courseId = "CRS" + firstThreeChars + grade.getNumber() + generateDigitsNumber(6);
-        return courseId;
-    }
 
 }

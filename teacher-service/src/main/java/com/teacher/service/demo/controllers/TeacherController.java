@@ -58,10 +58,12 @@ public class TeacherController implements Serializable {
         }
         boolean success = true;
         HttpStatus status = HttpStatus.CREATED;
-        Map<String, String> dataItem = new HashMap<>();
+        Map<String, Object> dataItem = new HashMap<>();
         dataItem.put("teacherId", teacherId);
-        JSONObject response = ru.responseJSON(status, "dataItem", dataItem, success);
-        responseEntity = ResponseEntity.status(status).body(response.toMap());
+        dataItem.put("responseCode", String.valueOf(status.value()));
+        dataItem.put("responseMessage", status.getReasonPhrase());
+//        JSONObject response = ru.responseJSON(status, "dataItem", dataItem, success);
+        responseEntity = ResponseEntity.status(status).body(dataItem);
         return responseEntity;
     }
 
@@ -75,8 +77,11 @@ public class TeacherController implements Serializable {
             dataItem.put("message", "Teachers data still empty");
         }
         dataItem.put("teachers", teacherResults);
-        JSONObject response = ru.responseJSON(status, "dataItem", dataItem, success);
-        responseEntity = ResponseEntity.ok().body(response.toMap());
+        dataItem.put("responseCode", status.value());
+        dataItem.put("responseMessage", status.getReasonPhrase());
+        dataItem.put("success", success);
+//        JSONObject response = ru.responseJSON(status, "dataItem", dataItem, success);
+        responseEntity = ResponseEntity.ok().body(dataItem);
         return responseEntity;
     }
 
@@ -91,8 +96,10 @@ public class TeacherController implements Serializable {
             dataItem.put("message", "Teacher is not found");
         }
         dataItem.put("teacher", teacher);
-        JSONObject response = ru.responseJSON(status, "dataItem", dataItem, success);
-        responseEntity = ResponseEntity.ok().body(response.toMap());
+        dataItem.put("responseCode", status.value());
+        dataItem.put("success", success);
+//        JSONObject response = ru.responseJSON(status, "dataItem", dataItem, success);
+        responseEntity = ResponseEntity.ok().body(dataItem);
         return responseEntity;
     }
 

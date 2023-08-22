@@ -1,4 +1,4 @@
-package com.facade.impl;
+package com.student.service.demo.facades.impl;
 
 import com.module.common.utils.SecurityUtil;
 import com.module.common.utils.VelocityUtil;
@@ -15,11 +15,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+@Service
 public class StudentFacadeImpl implements StudentFacade {
 
     @Autowired
@@ -68,11 +69,11 @@ public class StudentFacadeImpl implements StudentFacade {
     @Override
     public Student updateStudentByStudentId(String studentId, StudentRequest studentRequest) {
         Student student = studentService.getStudentByStudentId(studentId);
-        Map<String, Object> requestUpdateValidation = securityUtil.studentRequestUpdateValidation(student, studentRequest);
-        student
-                .setStudentName(requestUpdateValidation.get("studentName").toString())
-                .setStudentFatherName(requestUpdateValidation.get("studentFatherName").toString())
-                .setStudentMotherName(requestUpdateValidation.get("studentMotherName").toString());
+//        Map<String, Object> requestUpdateValidation = securityUtil.studentRequestUpdateValidation(student, studentRequest);
+//        student
+//                .setStudentName(requestUpdateValidation.get("studentName").toString())
+//                .setStudentFatherName(requestUpdateValidation.get("studentFatherName").toString())
+//                .setStudentMotherName(requestUpdateValidation.get("studentMotherName").toString());
         studentService.updateStudent(student);
         return student;
     }
@@ -112,5 +113,6 @@ public class StudentFacadeImpl implements StudentFacade {
         Student student = studentService.getStudentByStudentId(studentId);
         return student;
     }
+
 
 }

@@ -11,6 +11,7 @@ import com.teacher.service.demo.enums.TeacherStatus;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TeacherUtil implements Serializable {
@@ -59,6 +60,25 @@ public class TeacherUtil implements Serializable {
         });
         teachers.clear();
         return teacherResults;
+    }
+
+    public String generateTeacherId(TeacherRequest teacherRequest, int totalRequestedTeacher){
+        String year = vu.getCurrentYear();
+        String currDate = vu.getCurrentDateTime();
+        String requestedTotalStr = "";
+        if(totalRequestedTeacher < 10){
+            requestedTotalStr = "00" + totalRequestedTeacher;
+        }else if(totalRequestedTeacher >= 10 && totalRequestedTeacher < 100){
+            requestedTotalStr =  "0" + totalRequestedTeacher;
+        }else if(totalRequestedTeacher >= 100 && totalRequestedTeacher <= 999){
+            requestedTotalStr =  "" + totalRequestedTeacher;
+        }else{
+            return "";
+        }
+        Date date = vu.getDateRequest(teacherRequest.getTeacherDob());
+        String dateStr = date.toString();
+        String studentId = "STD" + year + requestedTotalStr + vu.convertDateToDDMMYYYY(teacherRequest.getTeacherDob(), "-") + vu.convertDateToDDMMYYYY(currDate, "/");
+        return studentId;
     }
 
 }

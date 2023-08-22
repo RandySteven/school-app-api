@@ -5,6 +5,8 @@ import com.course.service.demo.entity.model.Course;
 import com.course.service.demo.entity.model.Subject;
 import com.course.service.demo.entity.payload.result.CourseResult;
 import com.course.service.demo.entity.payload.result.SubjectResult;
+import com.course.service.demo.enums.Grade;
+import com.module.common.utils.VelocityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CourseUtil {
+
+    VelocityUtil vu = VelocityUtil.getInstance();
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CourseUtil.class);
 
@@ -39,6 +43,20 @@ public class CourseUtil {
             subjectResults.add(subjectToSubjectResult(subject));
         });
         return subjectResults;
+    }
+
+    /**
+     *
+     * @param course
+     * courseId = CRS + (first 3 chars from course name) + (grade / level [09|10|11|12]) + randomDigits(6)
+     * sample :
+     * courseId = CRSMAT10123456
+     * @return
+     */
+    public String generateCourseId(Course course, Grade grade){
+        String firstThreeChars = course.getCourseName().substring(0, 3);
+        String courseId = "CRS" + firstThreeChars + grade.getNumber() + vu.generateDigitsNumber(6);
+        return courseId;
     }
 
 }

@@ -4,6 +4,7 @@ import com.student.service.demo.entity.models.Student;
 import com.student.service.demo.entity.payloads.StudentRequest;
 import com.student.service.demo.entity.payloads.result.StudentResult;
 import com.student.service.demo.enums.StudentStatus;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;

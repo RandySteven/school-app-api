@@ -1,0 +1,5 @@
+com\module\common\utils\VelocityUtil.class
+com\module\common\utils\CommonUtil.class
+com\module\common\utils\ResponseUtil.class
+com\module\common\utils\SecurityUtil.class
+com\module\common\utils\StaticVariable.class

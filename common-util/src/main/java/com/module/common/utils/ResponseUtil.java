@@ -3,7 +3,6 @@ package com.module.common.utils;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -21,14 +20,14 @@ public class ResponseUtil implements Serializable {
         return new ResponseUtil();
     }
 
-    public JSONObject responseJSON(HttpStatus status, String dataName, Object dataItem, boolean success){
-        Map<String, Object> responseMap = new HashMap<>();
-        responseMap.put("responseCode", status.value());
-        responseMap.put("responseMessage", status.getReasonPhrase());
-        responseMap.put(dataName, dataItem);
-        responseMap.put("success", success);
-        JSONObject response = new JSONObject(responseMap);
-        return response;
-    }
+//    public JSONObject responseJSON(HttpStatus status, String dataName, Object dataItem, boolean success){
+//        Map<String, Object> responseMap = new HashMap<>();
+//        responseMap.put("responseCode", status.value());
+//        responseMap.put("responseMessage", status.getReasonPhrase());
+//        responseMap.put(dataName, dataItem);
+//        responseMap.put("success", success);
+//        JSONObject response = new JSONObject(responseMap);
+//        return response;
+//    }
 
 }

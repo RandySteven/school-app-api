@@ -47,6 +47,8 @@ public class StudentController {
 
     @PostMapping(REGISTER_STUDENT_ENDPOINT)
     public ResponseEntity<Map<String, Object>> registerStudent(@RequestBody StudentRequest studentRequest){
+        LOGGER.info("=== endpoint : " + REGISTER_STUDENT_ENDPOINT);
+        responseMap = new HashMap<>();
         CompletableFuture<String> studentIdFuture = studentFacade.registerNewStudent(studentRequest);
         String studentId;
         try{
@@ -60,7 +62,7 @@ public class StudentController {
         Map<String, String> dataItem = new HashMap<>();
         dataItem.put("studentId", studentId);
 
-        responseMap.put("status", status);
+        responseMap.put("status", status.value());
         responseMap.put("dataItem", dataItem);
         responseMap.put("success", success);
 
@@ -70,11 +72,13 @@ public class StudentController {
 
     @GetMapping(GET_ALL_STUDENTS_ENDPOINT)
     public ResponseEntity<Map<String, Object>> getAllStudents(){
+        LOGGER.info("=== endpoint : " + GET_ALL_STUDENTS_ENDPOINT);
+        responseMap = new HashMap<>();
         List<StudentResult> studentList = studentFacade.getAllStudentsResults();
         boolean success = true;
         HttpStatus status = HttpStatus.OK;
 
-        responseMap.put("status", status);
+        responseMap.put("status", status.value());
         responseMap.put("students", studentList);
         responseMap.put("success", success);
 
@@ -84,6 +88,7 @@ public class StudentController {
 
     @PostMapping(STUDENT_BACKUP_ENDPOINT)
     public ResponseEntity<Map<String, Object>> backupStudentRequest(@PathVariable String requestId){
+        responseMap = new HashMap<>();
         String studentId = studentFacade.backupStudentFromStudentRequest(requestId);
         boolean success = true;
         HttpStatus status = HttpStatus.CREATED;
@@ -103,6 +108,7 @@ public class StudentController {
 
     @GetMapping(GET_STUDENT_BY_STUDENT_ID_ENDPOINT)
     public ResponseEntity<Map<String, Object>> getStudentByStudentId(@PathVariable String studentId){
+        responseMap = new HashMap<>();
         Student student = studentFacade.getStudentByStudentId(studentId);
         boolean success = true;
         HttpStatus status = HttpStatus.OK;

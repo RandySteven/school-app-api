@@ -13,7 +13,6 @@
         <module>common-util</module>
         <module>teacher-service</module>
         <module>course-service</module>
-        <module>facade-impl</module>
         <module>abstract-util</module>
     </modules>
 
