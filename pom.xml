@@ -14,6 +14,7 @@
         <module>teacher-service</module>
         <module>course-service</module>
         <module>abstract-util</module>
+        <module>main-application</module>
     </modules>
 
     <properties>

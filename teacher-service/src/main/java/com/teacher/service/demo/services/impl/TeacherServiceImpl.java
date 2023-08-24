@@ -35,8 +35,8 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Teacher updateNewTeacher(TeacherRequest teacherRequest) {
-        return null;
+    public Teacher updateNewTeacher(Teacher teacher) {
+        return teacherRepository.saveAndFlush(teacher);
     }
 
     @Override

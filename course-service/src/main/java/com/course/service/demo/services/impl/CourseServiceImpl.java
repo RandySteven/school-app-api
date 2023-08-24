@@ -39,4 +39,10 @@ public class CourseServiceImpl implements CourseService {
     public void deleteCourseByCourseId(String courseId) {
 
     }
+
+    @Override
+    public boolean checkCourseExist(String courseId) {
+        Course course = courseRepository.findCourseByCourseId(courseId);
+        return course == null ? false : true;
+    }
 }

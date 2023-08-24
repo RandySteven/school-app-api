@@ -13,10 +13,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+@Service
 public class TeacherFacadeImpl implements TeacherFacade {
     @Autowired
     TeacherRequestService teacherRequestService;
@@ -58,7 +61,7 @@ public class TeacherFacadeImpl implements TeacherFacade {
     @Override
     public Teacher getTeacherByTeacherId(String teacherId) {
         Teacher teacher = teacherService.getTeacherByTeacherId(teacherId);
-        if(teacher.getDeletedAt() != null){
+        if(teacher.getDeletedAt() != null || teacher == null){
             return null;
         }
         return teacher;
@@ -66,6 +69,14 @@ public class TeacherFacadeImpl implements TeacherFacade {
 
     @Override
     public Teacher updateTeacherByTeacherId(String teacherId, TeacherRequest teacherRequest) {
-        return null;
+        Teacher teacher = getTeacherByTeacherId(teacherId);
+        if(teacher == null){
+            return null;
+        }
+        teacher.setUpdatedAt(LocalDateTime.now());
+        teacher.setTeacherName(teacherRequest.getTeacherName() != null ? teacherRequest.getTeacherName() : teacher.getTeacherName());
+        teacher.setTeacherPhoneNumber(teacherRequest.getTeacherPhoneNumber() != null ? teacherRequest.getTeacherPhoneNumber() : teacher.getTeacherPhoneNumber());
+        teacherService.updateNewTeacher(teacher);
+        return teacher;
     }
 }

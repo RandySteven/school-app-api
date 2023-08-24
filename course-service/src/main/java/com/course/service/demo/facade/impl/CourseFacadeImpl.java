@@ -3,6 +3,7 @@ package com.course.service.demo.facade.impl;
 import com.course.service.demo.entity.dtos.CourseDTO;
 import com.course.service.demo.entity.model.Course;
 import com.course.service.demo.entity.model.Subject;
+import com.course.service.demo.entity.payload.request.CourseRequest;
 import com.course.service.demo.entity.payload.result.CourseResult;
 import com.course.service.demo.enums.Grade;
 import com.course.service.demo.facade.CourseFacade;
@@ -39,6 +40,16 @@ public class CourseFacadeImpl implements CourseFacade {
     }
 
     @Override
+    public String addCourse(CourseRequest request) {
+        Course course = courseUtil.courseRequestToCourse(request);
+        Grade grade = request.getGrade();
+        String courseId = courseUtil.generateCourseId(course, grade);
+        course.setCourseId(courseId);
+        courseService.addCourse(course);
+        return course.getCourseId();
+    }
+
+    @Override
     public List<CourseResult> getAllCourseResults() {
         return null;
     }
@@ -49,6 +60,17 @@ public class CourseFacadeImpl implements CourseFacade {
         List<Subject> subjects = subjectService.getAllSubjects();
         CourseDTO courseDTO = courseUtil.getCourseDTO(course, subjects);
         return courseDTO;
+    }
+
+    @Override
+    public String addSubject(String courseId, Subject subject) {
+        if(!courseService.checkCourseExist(courseId)){
+            return "";
+        }
+        subject.setCourseId(courseId);
+        subject.setSubjectId(courseUtil.subjectId());
+        subjectService.addSubject(subject);
+        return subject.getSubjectId();
     }
 
 }

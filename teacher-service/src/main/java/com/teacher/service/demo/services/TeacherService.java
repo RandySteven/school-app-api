@@ -10,7 +10,7 @@ public interface TeacherService{
     Teacher registerNewTeacher(Teacher teacher);
     List<Teacher> getAllTeachers();
     Teacher getTeacherByTeacherId(String teacherId);
-    Teacher updateNewTeacher(TeacherRequest teacherRequest);
+    Teacher updateNewTeacher(Teacher teacher);
     void deleteTeacherByTeacherId(String teacherId);
 
 }

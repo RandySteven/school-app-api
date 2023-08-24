@@ -12,5 +12,5 @@ public interface CourseService {
     Course updateCourse(Course course);
     Course getCourseByCourseId(String courseId);
     void deleteCourseByCourseId(String courseId);
-
+    boolean checkCourseExist(String courseId);
 }

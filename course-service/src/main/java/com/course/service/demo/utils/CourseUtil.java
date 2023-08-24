@@ -3,6 +3,7 @@ package com.course.service.demo.utils;
 import com.course.service.demo.entity.dtos.CourseDTO;
 import com.course.service.demo.entity.model.Course;
 import com.course.service.demo.entity.model.Subject;
+import com.course.service.demo.entity.payload.request.CourseRequest;
 import com.course.service.demo.entity.payload.result.CourseResult;
 import com.course.service.demo.entity.payload.result.SubjectResult;
 import com.course.service.demo.enums.Grade;
@@ -33,6 +34,13 @@ public class CourseUtil {
         return new CourseDTO(course, subjectResults);
     }
 
+    public Course courseRequestToCourse(CourseRequest courseRequest){
+        Course course = new Course();
+        course.setCourseName(courseRequest.getCourseName());
+        course.setCourseDetail(courseRequest.getCourseDescription());
+        return course;
+    }
+
     public SubjectResult subjectToSubjectResult(Subject subject){
         return new SubjectResult(subject);
     }
@@ -59,4 +67,8 @@ public class CourseUtil {
         return courseId;
     }
 
+    public String subjectId(){
+        String randomAlphaNumb = vu.generateAlphaNumeric(13);
+        return "SUB" + randomAlphaNumb;
+    }
 }
