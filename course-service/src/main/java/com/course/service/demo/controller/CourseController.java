@@ -7,6 +7,7 @@ import com.course.service.demo.entity.payload.request.CourseRequest;
 import com.course.service.demo.entity.payload.result.CourseResult;
 import com.course.service.demo.enums.Grade;
 import com.course.service.demo.facade.CourseFacade;
+import com.module.common.utils.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class CourseController {
 
     @Autowired
     CourseFacade courseFacade;
+
+    private ResponseUtil responseUtil = ResponseUtil.getInstance();
 
     /**
      * courses
@@ -49,10 +52,9 @@ public class CourseController {
         responseMap = new HashMap<>();
         boolean success = true;
         String courseId = courseFacade.addCourse(request);
-        responseMap.put("success", success);
-        responseMap.put("responseCode", HttpStatus.CREATED.value());
-        responseMap.put("responseMessage", HttpStatus.CREATED.getReasonPhrase());
-        responseMap.put("courseId", courseId);
+        responseMap = responseUtil.setResponseMap(
+                HttpStatus.CREATED.value(), HttpStatus.CREATED.getReasonPhrase(), "courseId", courseId, success
+        );
         responseEntity = ResponseEntity.status(HttpStatus.CREATED).body(responseMap);
         return responseEntity;
     }
@@ -70,10 +72,9 @@ public class CourseController {
 //            success = true;
 //            status = HttpStatus.OK;
 //        }
-        responseMap.put("success", success);
-        responseMap.put("responseCode", status.value());
-        responseMap.put("responseMessage", status.getReasonPhrase());
-        responseMap.put("courseResults", courseResults);
+        responseMap = responseUtil.setResponseMap(
+            status.value(), status.getReasonPhrase(), "courseResult", courseResults, success
+        );
         responseEntity = ResponseEntity.status(status).body(responseMap);
         return responseEntity;
     }
@@ -92,10 +93,9 @@ public class CourseController {
             success = true;
             status = HttpStatus.OK;
         }
-        responseMap.put("success", success);
-        responseMap.put("responseCode", status.value());
-        responseMap.put("responseMessage", status.getReasonPhrase());
-        responseMap.put("course", courseDTO);
+        responseMap = responseUtil.setResponseMap(
+                status.value(), status.getReasonPhrase(), "course", courseDTO, success
+        );
         responseEntity = ResponseEntity.status(status).body(responseMap);
         return responseEntity;
     }
@@ -112,15 +112,27 @@ public class CourseController {
             success = true;
             status = HttpStatus.CREATED;
         }
-        responseMap.put("success", success);
-        responseMap.put("responseCode", status.value());
-        responseMap.put("responseMessage", status.getReasonPhrase());
-        responseMap.put("subjectId", subjectId);
+        responseMap = responseUtil.setResponseMap(
+                status.value(), status.getReasonPhrase(), "subjectId", subjectId, success
+        );
         responseEntity = ResponseEntity.status(status).body(responseMap);
         return responseEntity;
     }
 
+    @GetMapping(GET_SUBJECT_BY_SUBJECT_ID)
     public ResponseEntity<Map<String, Object>> getSubjectBySubjectId(@PathVariable String subjectId){
+        Subject subject = courseFacade.getSubjectBySubjectId(subjectId);
+        responseMap = new HashMap<>();
+        boolean success = false;
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        if(subject!=null){
+            success = true;
+            status = HttpStatus.CREATED;
+        }
+        responseMap = responseUtil.setResponseMap(
+                status.value(), status.getReasonPhrase(), "subject", subject, success
+        );
+        responseEntity = ResponseEntity.status(status).body(responseMap);
         return responseEntity;
     }
 

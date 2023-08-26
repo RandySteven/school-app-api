@@ -30,4 +30,14 @@ public class ResponseUtil implements Serializable {
 //        return response;
 //    }
 
+    public Map<String, Object> setResponseMap(int statusCode, String statusMessage,
+                                              String dataName, Object dataItem, boolean success){
+        Map<String, Object> responseMap = new HashMap<>();
+        responseMap.put("success", success);
+        responseMap.put("responseCode", statusCode);
+        responseMap.put("responseMessage", statusMessage);
+        responseMap.put(dataName, dataItem);
+        return responseMap;
+    }
+
 }
