@@ -12,4 +12,21 @@ public class CourseResult {
         this.url = "http://localhost:8082/v1/courses/" + course.getCourseId();
     }
 
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public CourseResult(){}
 }

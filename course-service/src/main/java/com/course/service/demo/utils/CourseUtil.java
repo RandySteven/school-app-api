@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CourseUtil {
 
@@ -32,6 +33,14 @@ public class CourseUtil {
             }
         });
         return new CourseDTO(course, subjectResults);
+    }
+
+    public List<CourseResult> coursesToCourseResults(List<Course> courses) {
+        List<CourseResult> courseResults = new ArrayList<>();
+        courses.forEach(course -> {
+            courseResults.add(courseToCourseResult(course));
+        });
+        return courseResults;
     }
 
     public Course courseRequestToCourse(CourseRequest courseRequest){
@@ -63,12 +72,12 @@ public class CourseUtil {
      */
     public String generateCourseId(Course course, Grade grade){
         String firstThreeChars = course.getCourseName().substring(0, 3);
-        String courseId = "CRS" + firstThreeChars + grade.getNumber() + vu.generateDigitsNumber(6);
+        String courseId = "CRS" + firstThreeChars.toUpperCase(Locale.ROOT) + grade.getNumber() + vu.generateDigitsNumber(6);
         return courseId;
     }
 
     public String subjectId(){
-        String randomAlphaNumb = vu.generateAlphaNumeric(13);
+        String randomAlphaNumb = vu.generateAlphaNumeric(13, false);
         return "SUB" + randomAlphaNumb;
     }
 }

@@ -14,9 +14,11 @@ import com.module.common.utils.VelocityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class CourseFacadeImpl implements CourseFacade {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CourseFacadeImpl.class);
@@ -51,14 +53,18 @@ public class CourseFacadeImpl implements CourseFacade {
 
     @Override
     public List<CourseResult> getAllCourseResults() {
-        return null;
+        List<Course> courses = courseService.getAllCourses();
+        List<CourseResult> courseResults = courseUtil.coursesToCourseResults(courses);
+        return courseResults;
     }
 
     @Override
     public CourseDTO getCourseByCourseId(String courseId) {
         Course course = courseService.getCourseByCourseId(courseId);
+        LOGGER.info("=== course : " + course.getCourseName());
         List<Subject> subjects = subjectService.getAllSubjects();
         CourseDTO courseDTO = courseUtil.getCourseDTO(course, subjects);
+        LOGGER.info("=== courseDTO : " + courseDTO);
         return courseDTO;
     }
 
@@ -71,6 +77,15 @@ public class CourseFacadeImpl implements CourseFacade {
         subject.setSubjectId(courseUtil.subjectId());
         subjectService.addSubject(subject);
         return subject.getSubjectId();
+    }
+
+    @Override
+    public Subject getSubjectBySubjectId(String subjectId) {
+        Subject subject = subjectService.getSubjectBySubjectId(subjectId);
+        if(subject != null){
+            return subject;
+        }
+        return null;
     }
 
 }

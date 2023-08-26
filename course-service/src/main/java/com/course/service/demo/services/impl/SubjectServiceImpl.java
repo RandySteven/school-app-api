@@ -6,11 +6,13 @@ import com.course.service.demo.services.SubjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
+@Service
 public class SubjectServiceImpl implements SubjectService, Serializable {
 
     @Serial
@@ -34,5 +36,10 @@ public class SubjectServiceImpl implements SubjectService, Serializable {
     @Override
     public Subject updateSubject(Subject subject) {
         return subjectRepository.saveAndFlush(subject);
+    }
+
+    @Override
+    public Subject getSubjectBySubjectId(String subjectId) {
+        return subjectRepository.findSubjectBySubjectId(subjectId);
     }
 }

@@ -22,7 +22,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> getAllCourses() {
-        return null;
+        return courseRepository.findAll();
     }
 
     @Override
@@ -32,7 +32,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course getCourseByCourseId(String courseId) {
-        return null;
+        return courseRepository.findCourseByCourseId(courseId);
     }
 
     @Override

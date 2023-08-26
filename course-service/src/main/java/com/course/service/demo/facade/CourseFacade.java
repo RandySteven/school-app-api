@@ -16,5 +16,5 @@ public interface CourseFacade {
     List<CourseResult> getAllCourseResults();
     CourseDTO getCourseByCourseId(String courseId);
     String addSubject(String courseId, Subject subject);
-
+    Subject getSubjectBySubjectId(String subjectId);
 }

@@ -8,4 +8,5 @@ public interface SubjectService {
     Subject addSubject(Subject subject);
     List<Subject> getAllSubjects();
     Subject updateSubject(Subject subject);
+    Subject getSubjectBySubjectId(String subjectId);
 }

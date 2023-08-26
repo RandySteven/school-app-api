@@ -47,16 +47,27 @@ public class CourseDTO {
 
     public CourseDTO(String courseId, String courseName, String courseDescription, List<SubjectResult> subjects) {
         this.courseId = courseId;
-        this.courseName = courseName;
+        this.courseName = courseName + " " + getGradeSubStringFromCourseId(courseId);
         this.courseDescription = courseDescription;
         this.subjects = subjects;
     }
 
     public CourseDTO(Course course, List<SubjectResult> subjects){
         this.courseId = course.getCourseId();
-        this.courseName = course.getCourseName();
+        this.courseName = course.getCourseName() + " " + getGradeSubStringFromCourseId(course.getCourseId());
         this.courseDescription = course.getCourseDetail();
         this.subjects = subjects;
     }
 
+    public CourseDTO(Course course){
+        this.courseId = course.getCourseId();
+        this.courseName = course.getCourseName() + " " + getGradeSubStringFromCourseId(course.getCourseId());
+        this.courseDescription = course.getCourseDetail();
+    }
+
+    public CourseDTO(){}
+
+    private String getGradeSubStringFromCourseId(String courseId){
+        return courseId.substring(6, 8);
+    }
 }

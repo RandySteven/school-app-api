@@ -28,15 +28,33 @@ public class VelocityUtil implements Serializable {
         return null;
     }
 
+    public String generateAlphaNumeric(int length, boolean lower){
+        if(lower){
+            return generateAlphaNumericLowerAlphabet(length);
+        }
+        return generateAlphaNumeric(length);
+    }
 
     public String generateAlphaNumeric(int length){
+        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String number = "0123456789";
+        String alphaNumeric = alphabet + number;
+        StringBuilder builder = new StringBuilder(length);
+        for(int i = 0 ; i < length ; i++){
+            char charIndex = alphaNumeric.charAt((int)(Math.random() * alphaNumeric.length()));
+            builder.append(charIndex);
+        }
+        return builder.toString();
+    }
+
+    public String generateAlphaNumericLowerAlphabet(int length){
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         String toLower = alphabet.toLowerCase();
         String number = "0123456789";
         String alphaNumeric = alphabet + toLower + number;
         StringBuilder builder = new StringBuilder(length);
         for(int i = 0 ; i < length ; i++){
-            char charIndex = alphabet.charAt((int)(Math.random() * alphaNumeric.length()));
+            char charIndex = alphaNumeric.charAt((int)(Math.random() * alphaNumeric.length()));
             builder.append(charIndex);
         }
         return builder.toString();
