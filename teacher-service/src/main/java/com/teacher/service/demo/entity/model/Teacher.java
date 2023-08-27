@@ -23,7 +23,7 @@ public class Teacher {
     private String teacherName;
     private String teacherEmail;
     private String teacherPassword;
-    private Address teacherAddress;
+    private String teacherAddress;
     private String teacherPhoneNumber;
     private Date teacherDob;
     private TeacherBachelorDegree teacherBachelorDegree;
@@ -78,11 +78,11 @@ public class Teacher {
         return this;
     }
 
-    public Address getTeacherAddress() {
+    public String getTeacherAddress() {
         return teacherAddress;
     }
 
-    public Teacher setTeacherAddress(Address teacherAddress) {
+    public Teacher setTeacherAddress(String teacherAddress) {
         this.teacherAddress = teacherAddress;
         return this;
     }

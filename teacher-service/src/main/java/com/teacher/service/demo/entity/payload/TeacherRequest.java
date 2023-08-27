@@ -16,6 +16,16 @@ public class TeacherRequest {
     private String teacherEmail;
     private String teacherPassword;
     private String teacherPhoneNumber;
+    private String teacherAddress;
+
+    public String getTeacherAddress() {
+        return teacherAddress;
+    }
+
+    public void setTeacherAddress(String teacherAddress) {
+        this.teacherAddress = teacherAddress;
+    }
+
     private TeacherRequestStatus teacherRequestStatus;
     private TeacherBachelorDegree teacherBachelorDegree;
 

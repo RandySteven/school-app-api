@@ -8,7 +8,7 @@ public class TeacherResult {
     private String teacherName;
     private String teacherEmail;
     private String teacherPhoneNumber;
-    private Address teacherAddress;
+    private String teacherAddress;
     private String url;
 
     public TeacherResult(Teacher teacher){

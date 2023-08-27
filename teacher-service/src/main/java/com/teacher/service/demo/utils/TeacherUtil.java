@@ -34,7 +34,7 @@ public class TeacherUtil implements Serializable {
                 .setTeacherPassword(teacherRequest.getTeacherPassword())
                 .setTeacherDob(vu.getDateRequest(teacherRequest.getTeacherDob()))
                 .setTeacherStatus(TeacherStatus.NORMAL)
-                .setTeacherAddress(teacherRequest.getAddress())
+                .setTeacherAddress(teacherRequest.getTeacherAddress())
                 .setTeacherPhoneNumber(teacherRequest.getTeacherPhoneNumber());
     }
 

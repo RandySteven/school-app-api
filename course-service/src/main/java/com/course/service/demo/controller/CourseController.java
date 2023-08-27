@@ -68,10 +68,10 @@ public class CourseController {
             LOGGER.info("=== courseResults : " + course.getUrl());
         }
         HttpStatus status = HttpStatus.OK;
-//        if(!courseResults.isEmpty()){
-//            success = true;
-//            status = HttpStatus.OK;
-//        }
+        if(!courseResults.isEmpty()){
+            success = true;
+            status = HttpStatus.OK;
+        }
         responseMap = responseUtil.setResponseMap(
             status.value(), status.getReasonPhrase(), "courseResult", courseResults, success
         );
