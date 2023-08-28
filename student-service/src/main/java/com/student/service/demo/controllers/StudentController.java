@@ -5,7 +5,6 @@ import com.student.service.demo.entity.payloads.StudentRequest;
 import com.student.service.demo.entity.payloads.result.StudentResult;
 import com.student.service.demo.facades.StudentFacade;
 import com.student.service.demo.services.StudentService;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +35,8 @@ public class StudentController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StudentController.class);
 
+    private static final String TEST_APP_ENDPOINT = "/test";
+
     private static final String REGISTER_STUDENT_ENDPOINT = "/register-student";
     private static final String REGISTER_MULTIPLE_STUDENTS_ENDPOINT = "/register-multiple-students";
     private static final String GET_ALL_STUDENTS_ENDPOINT = "";
@@ -44,6 +45,12 @@ public class StudentController {
     private static final String DELETE_STUDENT_BY_STUDENT_ID_ENDPOINT = "/delete-student/{studentId}";
     private static final String STUDENT_BACKUP_ENDPOINT = "/backup-student/{requestId}";
 
+    @GetMapping(TEST_APP_ENDPOINT)
+    public Map<String, Object> testEndpointStudent(){
+        responseMap = new HashMap<>();
+        responseMap.put("message", "Welcome Bujang");
+        return responseMap;
+    }
 
     @PostMapping(REGISTER_STUDENT_ENDPOINT)
     public ResponseEntity<Map<String, Object>> registerStudent(@RequestBody StudentRequest studentRequest){
