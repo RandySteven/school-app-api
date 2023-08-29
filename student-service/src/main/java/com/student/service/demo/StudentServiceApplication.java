@@ -12,7 +12,7 @@ public class StudentServiceApplication {
 	private static final Logger LOGGER = LoggerFactory.getLogger(StudentServiceApplication.class);
 
 	public static void main(String[] args) {
-		LOGGER.info("=== student service : http://localhost:8080");
+		LOGGER.info("=== student service : http://localhost:8081");
 		SpringApplication.run(StudentServiceApplication.class, args);
 	}
 

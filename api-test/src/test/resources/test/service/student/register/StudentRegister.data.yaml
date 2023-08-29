@@ -1,0 +1,13 @@
+- !!com.ipay.itest.common.model.TestData
+  dataId: NM_H_STUDENT_REGISTER_001
+  logicId: NM_H_STUDENT_REGISTER
+  description: Student register normal scenario
+  dataItems:
+    registerRequestBody:
+      studentName: "Randy Steven"
+      studentEmail: "randy.steven@school.id"
+      studentPassword: "test_1234"
+    registerResponseCheck:
+      responseCode: 201
+      responseMessage: "Created"
+      studentId: "$studentId"

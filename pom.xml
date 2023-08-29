@@ -15,6 +15,7 @@
         <module>course-service</module>
         <module>abstract-util</module>
         <module>api-gateway</module>
+        <module>api-test</module>
         <module>main-application</module>
     </modules>
 

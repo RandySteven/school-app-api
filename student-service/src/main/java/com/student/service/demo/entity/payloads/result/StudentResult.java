@@ -46,7 +46,7 @@ public class StudentResult {
     public StudentResult(Student student){
         this.studentName = student.getStudentName();
         this.studentEmail = student.getStudentEmail();
-        this.url = "http://localhost:8080/v1/students/" + student.getStudentId();
+        this.url = "http://localhost:8081/v1/students/" + student.getStudentId();
         this.studentStatus = student.getStudentStatus();
     }
 

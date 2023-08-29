@@ -69,11 +69,10 @@ public class StudentFacadeImpl implements StudentFacade {
     @Override
     public Student updateStudentByStudentId(String studentId, StudentRequest studentRequest) {
         Student student = studentService.getStudentByStudentId(studentId);
-//        Map<String, Object> requestUpdateValidation = securityUtil.studentRequestUpdateValidation(student, studentRequest);
-//        student
-//                .setStudentName(requestUpdateValidation.get("studentName").toString())
-//                .setStudentFatherName(requestUpdateValidation.get("studentFatherName").toString())
-//                .setStudentMotherName(requestUpdateValidation.get("studentMotherName").toString());
+        student
+                .setStudentName(studentRequest.getStudentName() != null ? studentRequest.getStudentName() : student.getStudentName())
+                .setStudentFatherName(studentRequest.getStudentFatherName() != null ? studentRequest.getStudentFatherName() : student.getStudentFatherName())
+                .setStudentMotherName(studentRequest.getStudentMotherName() != null ? studentRequest.getStudentMotherName() : student.getStudentMotherName());
         studentService.updateStudent(student);
         return student;
     }
