@@ -7,6 +7,10 @@ public class TestData {
     String dataId;
     String logicId;
     String description;
-    Map<String, Object> dataItems;
+    DataItems dataItems;
 
+}
+
+class DataItems {
+    Map<String, Object> dataItems;
 }

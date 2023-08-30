@@ -16,6 +16,7 @@
         <module>abstract-util</module>
         <module>api-gateway</module>
         <module>api-test</module>
+        <module>library-service</module>
         <module>main-application</module>
     </modules>
 
