@@ -17,6 +17,7 @@ public class Book {
     @JdbcTypeCode(SqlTypes.BIGINT)
     private Long id;
 
+    private String bookId;
     private String bookTitle;
     private String bookDescription;
     private String author;
@@ -27,8 +28,9 @@ public class Book {
 
     public Book(){}
 
-    public Book(Long id, String bookTitle, String bookDescription, String author, BookStatus bookStatus, LocalDateTime createdAt, LocalDateTime deletedAt) {
+    public Book(Long id, String bookId, String bookTitle, String bookDescription, String author, BookStatus bookStatus, LocalDateTime createdAt, LocalDateTime deletedAt) {
         this.id = id;
+        this.bookId = bookId;
         this.bookTitle = bookTitle;
         this.bookDescription = bookDescription;
         this.author = author;
@@ -43,6 +45,14 @@ public class Book {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(String bookId) {
+        this.bookId = bookId;
     }
 
     public String getBookTitle() {

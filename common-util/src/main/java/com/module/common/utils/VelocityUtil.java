@@ -3,6 +3,8 @@ package com.module.common.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -15,6 +17,9 @@ import java.util.Date;
 
 public class VelocityUtil implements Serializable {
 
+    @Autowired
+    private Environment env;
+
     @Serial
     private static final long serialVersionUID = -164289867292336617L;
 
@@ -25,7 +30,7 @@ public class VelocityUtil implements Serializable {
     private static final Logger LOGGER = LoggerFactory.getLogger(VelocityUtil.class);
 
     public Object p(String key){
-        return null;
+        return env.getProperty(key);
     }
 
     public String generateAlphaNumeric(int length, boolean lower){
@@ -117,5 +122,12 @@ public class VelocityUtil implements Serializable {
         return String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
     }
 
-
+    /**
+     * STD_RGS_d{8}.csv
+     * @return student-registration-report.csv
+     */
+    public String generateStudentRegistrationReportCsv(){
+        String fileName = "STD_RGS_" + generateDigitsNumber(8) + ".csv";
+        return fileName;
+    }
 }

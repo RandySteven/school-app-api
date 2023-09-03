@@ -7,7 +7,6 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-//@ComponentScan(basePackages = "com.api.gateway.demo.configs")
 @EnableEurekaClient
 public class ApiGatewayApplication {
 

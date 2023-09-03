@@ -26,4 +26,9 @@ public class ApiGatewayController {
         return responseMap;
     }
 
+    @GetMapping("hello-world")
+    public String helloWorldString(){
+        return "Hello World";
+    }
+
 }
