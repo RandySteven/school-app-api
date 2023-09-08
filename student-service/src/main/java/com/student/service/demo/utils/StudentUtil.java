@@ -12,9 +12,7 @@ import org.slf4j.LoggerFactory;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class StudentUtil {
 
@@ -108,6 +106,37 @@ public class StudentUtil {
         }
 
         return null;
+    }
+
+    public Map<String, Boolean> studentRequestValidation(StudentRequest request) {
+        Map<String, Boolean> validationMap = new HashMap<>();
+
+        if(vu.stringLengthValidation(request.getStudentName(), 3, 32) == false){
+            validationMap.put("studentName", false);
+        }
+
+        if(vu.stringLengthValidation(request.getStudentPassword(), 8, 32) == false){
+            validationMap.put("studentPassword", false);
+        }
+
+        if(vu.stringLengthValidation(request.getStudentFatherName(), 3, 32) == false){
+            validationMap.put("studentFatherName", false);
+        }
+
+        if(vu.stringLengthValidation(request.getStudentMotherName(), 3, 32) == false){
+            validationMap.put("studentMotherName", false);
+        }
+        return validationMap;
+    }
+
+    public Map<String, String> studentRequestGetValidationMessage(Map<String, Boolean> validationMap){
+        Map<String, String> requestMessage = new HashMap<>();
+        for (Map.Entry<String, Boolean> map: validationMap.entrySet()) {
+            if(!map.getValue()){
+                requestMessage.put(map.getKey(), "Invalid request value at field : " + map.getKey());
+            }
+        }
+        return requestMessage;
     }
 
 }

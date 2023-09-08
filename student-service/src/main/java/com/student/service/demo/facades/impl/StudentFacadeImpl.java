@@ -18,6 +18,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -53,7 +54,12 @@ public class StudentFacadeImpl implements StudentFacade {
 
     @Override
     @Async
-    public CompletableFuture<String> registerNewStudent(StudentRequest studentRequest) {
+    public Object registerNewStudent(StudentRequest studentRequest) {
+        Map<String, Boolean> validationMap = studentUtil.studentRequestValidation(studentRequest);
+        boolean isValid = vu.validationSuccessChecker(validationMap);
+        if(isValid==false){
+            return studentUtil.studentRequestGetValidationMessage(validationMap);
+        }
         studentRequestService.saveStudentRequest(studentRequest);
         int total = studentRequestService.getAllStudentRequestsSize();
         LOGGER.info("==== requestId : " + studentRequest.getRequestId());

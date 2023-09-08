@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 
 public class VelocityUtil implements Serializable {
 
@@ -31,6 +32,10 @@ public class VelocityUtil implements Serializable {
 
     public Object p(String key){
         return env.getProperty(key);
+    }
+
+    public void debug(Object d){
+        LOGGER.info("=== debug : " + d);
     }
 
     public String generateAlphaNumeric(int length, boolean lower){
@@ -130,4 +135,18 @@ public class VelocityUtil implements Serializable {
         String fileName = "STD_RGS_" + generateDigitsNumber(8) + ".csv";
         return fileName;
     }
+
+    public boolean stringLengthValidation(String val, int min, int max){
+        return val.length() >= min && val.length() <= max;
+    }
+
+    public boolean validationSuccessChecker(Map<String, Boolean> validationMap){
+        for (Map.Entry<String, Boolean> map: validationMap.entrySet()) {
+            if(map.getValue() == false){
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

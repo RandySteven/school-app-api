@@ -1,5 +1,6 @@
 package com.student.service.demo.controllers;
 
+import com.module.common.utils.ResponseUtil;
 import com.student.service.demo.entity.models.Student;
 import com.student.service.demo.entity.payloads.StudentRequest;
 import com.student.service.demo.entity.payloads.result.StudentResult;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -31,7 +33,7 @@ public class StudentController {
 
     ResponseEntity<Map<String, Object>> responseEntity;
     
-//    ResponseUtil ru = ResponseUtil.getInstance();
+    ResponseUtil ru = ResponseUtil.getInstance();
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StudentController.class);
 
@@ -53,25 +55,37 @@ public class StudentController {
     }
 
     @PostMapping(REGISTER_STUDENT_ENDPOINT)
+    @Transactional(timeout = 10)
     public ResponseEntity<Map<String, Object>> registerStudent(@RequestBody StudentRequest studentRequest){
         LOGGER.info("=== endpoint : " + REGISTER_STUDENT_ENDPOINT);
         responseMap = new HashMap<>();
-        CompletableFuture<String> studentIdFuture = studentFacade.registerNewStudent(studentRequest);
         String studentId;
-        try{
-            studentId = studentIdFuture.get();
-        }catch (Exception e){
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+        Object value = studentFacade.registerNewStudent(studentRequest);
+        CompletableFuture<String> studentIdFuture = null;
         boolean success = true;
-        HttpStatus status = HttpStatus.CREATED;
-        Map<String, String> dataItem = new HashMap<>();
-        dataItem.put("studentId", studentId);
+        HttpStatus status = null;
+        Map<String, Object> dataItem = new HashMap<>();
+        if(value instanceof CompletableFuture<?>){
+             studentIdFuture = (CompletableFuture<String>) studentFacade.registerNewStudent(studentRequest);
+            try{
+                studentId = studentIdFuture.get();
+            }catch (Exception e){
+                e.printStackTrace();
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
+            dataItem.put("studentId", studentId);
+            status = HttpStatus.CREATED;
+        }else if(value instanceof Map<?,?>){
+            Map<String, String> errorMessage = new HashMap<>();
+            for (Map.Entry<?, ?> response: ((Map<?, ?>) value).entrySet()) {
+                errorMessage.put((String)response.getKey(), (String)response.getValue());
+            }
+            dataItem.put("errorMessage", errorMessage);
+            status = HttpStatus.BAD_REQUEST;
+            success = false;
+        }
 
-        responseMap.put("status", status.value());
-        responseMap.put("dataItem", dataItem);
-        responseMap.put("success", success);
+        responseMap = ru.setResponseMap(status.value(), status.getReasonPhrase(), "dataItem", dataItem, success);
 
         responseEntity = ResponseEntity.status(status).body(responseMap);
         return responseEntity;
@@ -85,9 +99,7 @@ public class StudentController {
         boolean success = true;
         HttpStatus status = HttpStatus.OK;
 
-        responseMap.put("status", status.value());
-        responseMap.put("students", studentList);
-        responseMap.put("success", success);
+        responseMap = ru.setResponseMap(status.value(), status.getReasonPhrase(), "students", studentList, success);
 
         responseEntity = ResponseEntity.ok().body(responseMap);
         return responseEntity;

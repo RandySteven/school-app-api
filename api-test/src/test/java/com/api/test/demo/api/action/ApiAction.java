@@ -20,7 +20,7 @@ import java.util.Map;
 
 public abstract class ApiAction {
 
-    protected static final String API_HOST = "http://localhost:";
+    protected static final String API_HOST = "http://localhost:8181";
 
     protected static URL url;
 
