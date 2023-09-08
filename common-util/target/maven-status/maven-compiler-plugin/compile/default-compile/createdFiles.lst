@@ -1,3 +1,4 @@
+com\module\common\utils\QueryUtil.class
 com\module\common\utils\VelocityUtil.class
 com\module\common\utils\CommonUtil.class
 com\module\common\utils\ResponseUtil.class

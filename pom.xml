@@ -18,6 +18,7 @@
         <module>api-test</module>
         <module>library-service</module>
         <module>main-application</module>
+        <module>eureka-service</module>
     </modules>
 
     <properties>

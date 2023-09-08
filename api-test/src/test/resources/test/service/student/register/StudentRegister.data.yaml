@@ -1,4 +1,4 @@
-- !!com.ipay.itest.common.model.TestData
+- !!com.api.test.demo.entity.TestData
   dataId: NM_H_STUDENT_REGISTER_001
   logicId: NM_H_STUDENT_REGISTER
   description: Student register normal scenario
@@ -11,3 +11,16 @@
       responseCode: 201
       responseMessage: "Created"
       studentId: "$studentId"
+
+- !!com.api.test.demo.entity.TestData
+  dataId: NM_H_STUDENT_REGISTER_002
+  logicId: NM_H_STUDENT_REGISTER
+  description: Got a bad request for student name
+  dataItems:
+    registerRequestBody:
+      studentName: "A"
+      studentEmail: "randy.steven@school.id"
+      studentPassword: "test_1234"
+    registerResponseCheck:
+      responseCode: 400
+      responseMessage: "Bad Request"
