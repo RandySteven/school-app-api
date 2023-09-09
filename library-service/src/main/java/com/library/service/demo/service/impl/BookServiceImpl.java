@@ -21,6 +21,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book addNewBook(Book book) {
+        book.setCreatedAt(LocalDateTime.now());
         return bookRepository.save(book);
     }
 

@@ -46,4 +46,12 @@ public class BookUtil implements Serializable {
         return results;
     }
 
+    public Book bookRequestToBook(BookRequest request){
+        Book book = new Book();
+        book.setBookTitle(request.getBookTitle());
+        book.setBookDescription(request.getBookDescription());
+        book.setAuthor(request.getAuthor());
+        return new Book();
+    }
+
 }

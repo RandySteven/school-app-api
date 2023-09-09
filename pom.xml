@@ -19,6 +19,8 @@
         <module>library-service</module>
         <module>main-application</module>
         <module>eureka-service</module>
+        <module>book-borrow-service</module>
+        <module>enums-school-app</module>
     </modules>
 
     <properties>
