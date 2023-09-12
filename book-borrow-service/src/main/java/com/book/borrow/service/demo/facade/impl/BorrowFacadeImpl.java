@@ -5,6 +5,7 @@ import com.book.borrow.service.demo.entity.payload.result.BorrowResult;
 import com.book.borrow.service.demo.facade.BorrowFacade;
 import com.book.borrow.service.demo.service.BorrowDetailService;
 import com.book.borrow.service.demo.service.BorrowHeaderService;
+import com.book.borrow.service.demo.utils.BorrowUtil;
 import com.library.service.demo.entity.payload.result.BookResult;
 import com.library.service.demo.facade.BookFacade;
 import com.library.service.demo.service.BookService;
@@ -33,19 +34,18 @@ public class BorrowFacadeImpl implements BorrowFacade, Serializable {
     @Autowired
     BookFacade bookFacade;
 
+    BorrowUtil borrowUtil = BorrowUtil.getInstance();
+
     private static final Logger LOGGER = LoggerFactory.getLogger(BorrowFacadeImpl.class);
 
     @Override
-    public String createBorrow(BorrowRequest request) {
-        /**
-         * 1. request -> model header
-         * 2. generate the borrowId
-         * 3. update book status list of bookIds
-         * 4. insert into book header service
-         * 5. insert into book detail service
-         */
-
-        return null;
+    public BorrowResult createBorrow(BorrowRequest request) {
+        String borrowId = borrowHeaderService.createBorrowHeader(borrowUtil.borrowRequestToBorrowHeader(request));
+        borrowDetailService.createBorrowDetail(borrowId, request.getBookIds());
+        for (String bookId: request.getBookIds()) {
+            bookFacade.updateBookStatus(bookId);
+        }
+        return borrowUtil.getBorrowResult(borrowHeaderService.getBorrowByBorrowId(borrowId), request.getBookIds());
     }
 
     @Override

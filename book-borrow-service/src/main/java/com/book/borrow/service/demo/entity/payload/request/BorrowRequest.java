@@ -12,20 +12,17 @@ public class BorrowRequest {
      *          "bookId": "",
      *          "bookId": "",
      *     ],
-     *     "borrowedDate": ""
      * }
      */
 
     private String userId;
     private List<String> bookIds;
-    private Date borrowedDate;
 
     public BorrowRequest(){}
 
-    public BorrowRequest(String userId, List<String> bookIds, Date borrowedDate) {
+    public BorrowRequest(String userId, List<String> bookIds) {
         this.userId = userId;
         this.bookIds = bookIds;
-        this.borrowedDate = borrowedDate;
     }
 
     public String getUserId() {
@@ -42,13 +39,5 @@ public class BorrowRequest {
 
     public void setBookIds(List<String> bookIds) {
         this.bookIds = bookIds;
-    }
-
-    public Date getBorrowedDate() {
-        return borrowedDate;
-    }
-
-    public void setBorrowedDate(Date borrowedDate) {
-        this.borrowedDate = borrowedDate;
     }
 }

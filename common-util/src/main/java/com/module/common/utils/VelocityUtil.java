@@ -118,6 +118,10 @@ public class VelocityUtil implements Serializable {
         return date.replace(separator,"");
     }
 
+    public String getDateDDMMYYYY(){
+        return convertDateToDDMMYYYY(getCurrentDateTime(), "/");
+    }
+
     /**
      * @getCurrentYear()
      * Get current year

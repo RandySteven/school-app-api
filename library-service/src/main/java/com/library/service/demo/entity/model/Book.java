@@ -21,6 +21,7 @@ public class Book {
     private String bookTitle;
     private String bookDescription;
     private String author;
+    @Enumerated
     private BookStatus bookStatus;
 
     private LocalDateTime createdAt;

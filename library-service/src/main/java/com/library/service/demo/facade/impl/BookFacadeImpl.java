@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -36,12 +37,21 @@ public class BookFacadeImpl implements BookFacade {
 
     @Override
     public Book getBookByBookId(String bookId) {
+        Book book = bookService.getBookByBookId(bookId);
+        if(book.getDeletedAt()==null){
+            return book;
+        }
         return null;
     }
 
     @Override
-    public List<BookResult> getAllBookResults() {
-        List<Book> books = bookService.getAllBooks();
+    public List<BookResult> getAllBookResults(BookStatus status) {
+        List<Book> books = new ArrayList<>();
+        LOGGER.info("=== status : " + status);
+        if(status == null) {
+            books = bookService.getAllBooks();
+        }
+        books = bookService.getAllBooksByBookStatus(status);
         if(books.isEmpty()){
             return null;
         }

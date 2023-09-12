@@ -1,6 +1,7 @@
 package com.library.service.demo.service.impl;
 
 import com.library.service.demo.entity.model.Book;
+import com.library.service.demo.enums.BookStatus;
 import com.library.service.demo.repository.BookRepository;
 import com.library.service.demo.service.BookService;
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,6 +30,17 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
+    }
+
+    @Override
+    public List<Book> getAllBooksByBookStatus(BookStatus status) {
+        List<Book> books = getAllBooks();
+        List<Book> filteredBooks = new ArrayList<>();
+        books.forEach(book -> {
+            if(book.getBookStatus()==status)
+                filteredBooks.add(book);
+        });
+        return filteredBooks;
     }
 
     @Override

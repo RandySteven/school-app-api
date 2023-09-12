@@ -8,7 +8,9 @@ import org.hibernate.type.SqlTypes;
 @Table(name = "borrow_details")
 public class BorrowDetail {
 
+    @Id
     private String borrowId;
+    @Id
     private String bookId;
 
     public BorrowDetail(String borrowId, String bookId) {

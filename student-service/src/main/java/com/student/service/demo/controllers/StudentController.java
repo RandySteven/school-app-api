@@ -40,6 +40,7 @@ public class StudentController {
     private static final String TEST_APP_ENDPOINT = "/test";
 
     private static final String REGISTER_STUDENT_ENDPOINT = "/register-student";
+    private static final String LOGIN_STUDENT_ENDPOINT = "/login";
     private static final String REGISTER_MULTIPLE_STUDENTS_ENDPOINT = "/register-multiple-students";
     private static final String GET_ALL_STUDENTS_ENDPOINT = "";
     private static final String GET_STUDENT_BY_STUDENT_ID_ENDPOINT = "/{studentId}";
@@ -148,4 +149,8 @@ public class StudentController {
         return responseEntity;
     }
 
+    @GetMapping(LOGIN_STUDENT_ENDPOINT)
+    public ResponseEntity<Map<String, Object>> loginStudent(String studentEmail, String studentPassword){
+        return responseEntity;
+    }
 }

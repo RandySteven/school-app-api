@@ -29,7 +29,7 @@ public class BookUtil implements Serializable {
         String bookName = request.getBookTitle().replace(" ", "").toUpperCase().substring(0, 3);
         String bookAuthor = request.getAuthor().replace(" ", "").toUpperCase().substring(0, 3);
         String randomDigits = vu.generateDigitsNumber(3);
-        return "BKS" + bookName + bookAuthor + randomDigits;
+        return "BKS" + bookName + bookAuthor + randomDigits + vu.getDateDDMMYYYY();
     }
 
     public BookResult bookToBookResult(Book book){
@@ -51,7 +51,7 @@ public class BookUtil implements Serializable {
         book.setBookTitle(request.getBookTitle());
         book.setBookDescription(request.getBookDescription());
         book.setAuthor(request.getAuthor());
-        return new Book();
+        return book;
     }
 
 }

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface BorrowHeaderService {
 
-    BorrowHeader createBorrowHeader(BorrowHeader header);
+    String createBorrowHeader(BorrowHeader header);
     List<BorrowHeader> getAllBorrowHeader();
     BorrowHeader getBorrowByBorrowId(String borrowId);
 

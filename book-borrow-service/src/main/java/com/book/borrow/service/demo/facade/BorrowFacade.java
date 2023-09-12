@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface BorrowFacade {
 
-    String createBorrow(BorrowRequest request);
+    BorrowResult createBorrow(BorrowRequest request);
     List<BookResult> getAllBorrowResults();
     BorrowResult getBorrowResultByBorrowId(String borrowId);
     BorrowResult getBorrowResultByStudentId(String studentId);
