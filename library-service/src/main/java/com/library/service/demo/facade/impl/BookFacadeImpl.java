@@ -46,12 +46,11 @@ public class BookFacadeImpl implements BookFacade {
 
     @Override
     public List<BookResult> getAllBookResults(BookStatus status) {
-        List<Book> books = new ArrayList<>();
+        List<Book> books = bookService.getAllBooks();
         LOGGER.info("=== status : " + status);
-        if(status == null) {
-            books = bookService.getAllBooks();
+        if(status != null) {
+            books = bookService.getAllBooksByBookStatus(status);
         }
-        books = bookService.getAllBooksByBookStatus(status);
         if(books.isEmpty()){
             return null;
         }

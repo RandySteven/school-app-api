@@ -139,4 +139,19 @@ public class StudentUtil {
         return requestMessage;
     }
 
+    public void validateStudentIsNotExist(Student student){
+        if(student==null){
+            LOGGER.info("=== Student is not exist");
+            return;
+        }
+        LOGGER.info("=== Student is exist");
+    }
+
+    public void validateStudentIsDeleted(Student student){
+        if(student.getDeletedAt() != null) {
+            LOGGER.info("=== Student already deleted");
+            return;
+        };
+        LOGGER.info("=== Student is exist");
+    }
 }

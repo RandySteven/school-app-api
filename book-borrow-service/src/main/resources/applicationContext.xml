@@ -1,0 +1,15 @@
+<!-- applicationContext.xml -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="bookFacade" class="com.library.service.demo.facade.impl.BookFacadeImpl"/>
+    <bean id="bookService" class="com.library.service.demo.service.impl.BookServiceImpl"/>
+
+    <bean id="studentRequestService" class="com.student.service.demo.services.impl.StudentRequestServiceImpl"/>
+    <bean id="studentService" class="com.student.service.demo.services.impl.StudentServiceImpl"/>
+    <bean id="studentFacade" class="com.student.service.demo.facades.impl.StudentFacadeImpl"/>
+
+
+</beans>

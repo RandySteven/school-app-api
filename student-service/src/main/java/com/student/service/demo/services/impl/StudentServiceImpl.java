@@ -17,10 +17,10 @@ import java.util.List;
 @Service
 public class StudentServiceImpl implements StudentService {
 
-    @Autowired
+    @Autowired(required = false)
     StudentRepository studentRepository;
 
-    @Autowired
+    @Autowired(required = false)
     StudentRequestRepository studentRequestRepository;
 
     ErrorHandler errorHandler = ErrorHandler.getInstance();

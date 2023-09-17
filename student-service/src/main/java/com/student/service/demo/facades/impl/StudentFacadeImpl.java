@@ -93,12 +93,16 @@ public class StudentFacadeImpl implements StudentFacade {
     @Override
     public void deleteStudentByStudentId(String studentId) {
         Student student = studentService.getStudentByStudentId(studentId);
+        studentUtil.validateStudentIsNotExist(student);
+        studentUtil.validateStudentIsDeleted(student);
         studentService.deleteStudent(student);
     }
 
     @Override
     public StudentResult updateStudentStatus(String studentId, StudentStatus studentStatus) {
         Student student = studentService.getStudentByStudentId(studentId);
+        studentUtil.validateStudentIsNotExist(student);
+        studentUtil.validateStudentIsDeleted(student);
         student.setStudentStatus(studentStatus);
         studentService.updateStudent(student);
         StudentResult studentResult = studentUtil.studentModelToStudentResult(student);
@@ -108,6 +112,8 @@ public class StudentFacadeImpl implements StudentFacade {
     @Override
     public Student dropOutStudent(String studentId) {
         Student student = studentService.getStudentByStudentId(studentId);
+        studentUtil.validateStudentIsNotExist(student);
+        studentUtil.validateStudentIsDeleted(student);
         student.setStudentStatus(StudentStatus.DROPOUT);
         studentService.updateStudent(student);
         return student;
@@ -116,8 +122,8 @@ public class StudentFacadeImpl implements StudentFacade {
     @Override
     public Student getStudentByStudentId(String studentId) {
         Student student = studentService.getStudentByStudentId(studentId);
+        studentUtil.validateStudentIsNotExist(student);
+        studentUtil.validateStudentIsDeleted(student);
         return student;
     }
-
-
 }

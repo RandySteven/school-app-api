@@ -4,11 +4,13 @@ import com.book.borrow.service.demo.entity.model.BorrowDetail;
 import com.book.borrow.service.demo.entity.model.BorrowHeader;
 import com.book.borrow.service.demo.entity.payload.request.BorrowRequest;
 import com.book.borrow.service.demo.entity.payload.result.BorrowResult;
+import com.book.borrow.service.demo.enums.BorrowStatus;
 import com.library.service.demo.entity.model.Book;
 import com.library.service.demo.entity.payload.result.BookResult;
 import com.library.service.demo.facade.BookFacade;
 import com.library.service.demo.service.BookService;
 import com.library.service.demo.utils.BookUtil;
+import com.module.common.utils.VelocityUtil;
 import com.student.service.demo.facades.StudentFacade;
 import com.student.service.demo.services.StudentService;
 import org.slf4j.Logger;
@@ -30,16 +32,16 @@ public class BorrowUtil {
 
     BookUtil bookUtil = BookUtil.getInstance();
 
+    VelocityUtil vu = VelocityUtil.getInstance();
+
     public static BorrowUtil getInstance(){
         return new BorrowUtil();
     }
 
-    public String generateBorrowId(){
-        return "";
-    }
-
     public BorrowHeader borrowRequestToBorrowHeader(BorrowRequest request){
-        return new BorrowHeader();
+        BorrowHeader header = new BorrowHeader();
+        header.setStudentId(request.getStudentId());
+        return header;
     }
 
     public BorrowResult getBorrowResult(BorrowHeader header, List<String> bookIds){
@@ -51,9 +53,14 @@ public class BorrowUtil {
                 header.getBorrowId(),
                 studentService.getStudentByStudentId(header.getStudentId()).getStudentName(),
                 header.getBorrowedDate().toString(),
-                header.getReturnDate().toString(),
+                "",
                 bookResults
         );
+    }
+
+    public String generateBorrowId(){
+        String randomDigits = vu.generateAlphaNumeric(16, false);
+        return "BRW" + randomDigits;
     }
 
 }

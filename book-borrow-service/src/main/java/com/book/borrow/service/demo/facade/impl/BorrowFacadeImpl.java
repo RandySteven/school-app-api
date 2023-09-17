@@ -1,5 +1,6 @@
 package com.book.borrow.service.demo.facade.impl;
 
+import com.book.borrow.service.demo.entity.model.BorrowHeader;
 import com.book.borrow.service.demo.entity.payload.request.BorrowRequest;
 import com.book.borrow.service.demo.entity.payload.result.BorrowResult;
 import com.book.borrow.service.demo.facade.BorrowFacade;
@@ -9,6 +10,7 @@ import com.book.borrow.service.demo.utils.BorrowUtil;
 import com.library.service.demo.entity.payload.result.BookResult;
 import com.library.service.demo.facade.BookFacade;
 import com.library.service.demo.service.BookService;
+import com.module.common.utils.VelocityUtil;
 import com.netflix.discovery.converters.Auto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,10 +22,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Service
-public class BorrowFacadeImpl implements BorrowFacade, Serializable {
-
-    @Serial
-    private static final long serialVersionUID = -4435298641469674782L;
+public class BorrowFacadeImpl implements BorrowFacade {
 
     @Autowired
     BorrowDetailService borrowDetailService;
@@ -36,11 +35,17 @@ public class BorrowFacadeImpl implements BorrowFacade, Serializable {
 
     BorrowUtil borrowUtil = BorrowUtil.getInstance();
 
+    VelocityUtil vu = VelocityUtil.getInstance();
+
     private static final Logger LOGGER = LoggerFactory.getLogger(BorrowFacadeImpl.class);
 
     @Override
     public BorrowResult createBorrow(BorrowRequest request) {
-        String borrowId = borrowHeaderService.createBorrowHeader(borrowUtil.borrowRequestToBorrowHeader(request));
+        BorrowHeader header = new BorrowHeader();
+        vu.debug(request.getStudentId());
+        vu.debug(request.getBookIds());
+        header.setStudentId(request.getStudentId());
+        String borrowId = borrowHeaderService.createBorrowHeader(header);
         borrowDetailService.createBorrowDetail(borrowId, request.getBookIds());
         for (String bookId: request.getBookIds()) {
             bookFacade.updateBookStatus(bookId);

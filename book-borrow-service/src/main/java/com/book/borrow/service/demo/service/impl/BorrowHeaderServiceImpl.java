@@ -7,10 +7,12 @@ import com.book.borrow.service.demo.service.BorrowHeaderService;
 import com.book.borrow.service.demo.utils.BorrowUtil;
 import com.module.common.utils.VelocityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 
+@Service
 public class BorrowHeaderServiceImpl implements BorrowHeaderService {
 
     @Autowired
@@ -36,6 +38,6 @@ public class BorrowHeaderServiceImpl implements BorrowHeaderService {
 
     @Override
     public BorrowHeader getBorrowByBorrowId(String borrowId) {
-        return null;
+        return borrowRepository.findBorrowHeaderByBorrowId(borrowId);
     }
 }

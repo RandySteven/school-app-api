@@ -12,7 +12,7 @@ import java.util.Optional;
 @Service
 public class StudentRequestServiceImpl implements StudentRequestService {
 
-    @Autowired
+    @Autowired(required = false)
     StudentRequestRepository studentRequestRepository;
 
 

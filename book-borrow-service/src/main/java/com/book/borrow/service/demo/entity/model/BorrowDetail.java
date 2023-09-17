@@ -1,11 +1,10 @@
 package com.book.borrow.service.demo.entity.model;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "borrow_details")
+@IdClass(BorrowBookId.class)
 public class BorrowDetail {
 
     @Id
