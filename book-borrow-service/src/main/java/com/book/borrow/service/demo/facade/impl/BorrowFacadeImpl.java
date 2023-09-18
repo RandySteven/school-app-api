@@ -12,6 +12,7 @@ import com.library.service.demo.facade.BookFacade;
 import com.library.service.demo.service.BookService;
 import com.module.common.utils.VelocityUtil;
 import com.netflix.discovery.converters.Auto;
+import com.rest.util.demo.utils.RestUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -37,6 +39,8 @@ public class BorrowFacadeImpl implements BorrowFacade {
 
     VelocityUtil vu = VelocityUtil.getInstance();
 
+    RestUtil restUtil = RestUtil.getInstance();
+
     private static final Logger LOGGER = LoggerFactory.getLogger(BorrowFacadeImpl.class);
 
     @Override
@@ -48,14 +52,15 @@ public class BorrowFacadeImpl implements BorrowFacade {
         String borrowId = borrowHeaderService.createBorrowHeader(header);
         borrowDetailService.createBorrowDetail(borrowId, request.getBookIds());
         for (String bookId: request.getBookIds()) {
-            bookFacade.updateBookStatus(bookId);
+            restUtil.getResponseBodyFromResponseEntity("http://localhost:8181", "v1/books", "update-status/"+bookId);
         }
         return borrowUtil.getBorrowResult(borrowHeaderService.getBorrowByBorrowId(borrowId), request.getBookIds());
     }
 
     @Override
     public List<BookResult> getAllBorrowResults() {
-        return null;
+        List<BookResult> bookResults = new ArrayList<>();
+        return bookResults;
     }
 
     @Override

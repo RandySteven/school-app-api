@@ -18,6 +18,7 @@
         <module>api-test</module>
         <module>library-service</module>
         <module>main-application</module>
+        <module>rest-util</module>
         <module>eureka-service</module>
         <module>book-borrow-service</module>
         <module>enums-school-app</module>

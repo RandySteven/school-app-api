@@ -31,6 +31,9 @@ public class BookController {
     private static final String GET_ALL_BOOKS_ENDPOINT = "";
     private static final String GET_BOOK_BY_BOOK_ID_ENDPOINT = "/{bookId}";
     private static final String DELETE_BOOK_BY_BOOK_ID_ENDPOINT = "/delete-book/{bookId}";
+    private static final String UPDATE_BOOK_BY_BOOK_ID_ENDPOINT = "/update-book/{bookId}";
+    private static final String UPDATE_BOOK_STATUS_BY_BOOK_ID_ENDPOINT = "/update-status/{bookId}";
+    private static final String UPDATE_BOOK_STATUS_BY_MULTIPLE_REQUEST_BODIES_ENDPOINT = "/update-book-status";
 
     Map<String, Object> responseMap;
 
@@ -86,7 +89,41 @@ public class BookController {
         return responseEntity;
     }
 
+    @DeleteMapping(DELETE_BOOK_BY_BOOK_ID_ENDPOINT)
     public ResponseEntity<Map<String, Object>> deleteBookByBookId(@PathVariable String bookId){
+        return responseEntity;
+    }
+
+    @PatchMapping(UPDATE_BOOK_BY_BOOK_ID_ENDPOINT)
+    public ResponseEntity<Map<String, Object>> updateBookByBookId(@PathVariable String bookId, @RequestBody BookRequest bookRequest){
+        responseMap = new HashMap<>();
+
+        return responseEntity;
+    }
+
+    @PatchMapping(UPDATE_BOOK_STATUS_BY_BOOK_ID_ENDPOINT)
+    public ResponseEntity<Map<String, Object>> updateBookStatusByBookId(@PathVariable String bookId){
+        responseMap = new HashMap<>();
+        HttpStatus status = HttpStatus.OK;
+        boolean success = true;
+        Book book = bookFacade.updateBookStatus(bookId);
+        if(book == null){
+            success = false;
+            status = HttpStatus.NOT_FOUND;
+        }
+        responseMap = responseUtil.setResponseMap(status.value(), status.getReasonPhrase(), "book", book, success);
+        responseEntity = ResponseEntity.status(status).body(responseMap);
+        return responseEntity;
+    }
+
+    @PatchMapping(UPDATE_BOOK_STATUS_BY_MULTIPLE_REQUEST_BODIES_ENDPOINT)
+    public ResponseEntity<Map<String, Object>> updateBooksStatusByRequestBodies(@RequestBody List<String> bookIds){
+        responseMap = new HashMap<>();
+        HttpStatus status = HttpStatus.OK;
+        boolean success = true;
+        List<Book> books = bookFacade.updateMultipleBooksStatus(bookIds);
+        responseMap = responseUtil.setResponseMap(status.value(), status.getReasonPhrase(), "books", books, success);
+        responseEntity = ResponseEntity.status(status).body(responseMap);
         return responseEntity;
     }
 

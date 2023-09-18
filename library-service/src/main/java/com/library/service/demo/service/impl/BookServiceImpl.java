@@ -59,4 +59,24 @@ public class BookServiceImpl implements BookService {
         book.setDeletedAt(LocalDateTime.now());
         bookRepository.saveAndFlush(book);
     }
+
+    @Override
+    public void updateMultipleBooksStatus(List<Book> books){
+        books.forEach(book -> {
+            book.setBookStatus(
+                    book.getBookStatus() == BookStatus.AVAILABLE ?
+                            BookStatus.BORROWED : BookStatus.AVAILABLE
+            );
+        });
+        bookRepository.saveAllAndFlush(books);
+    }
+
+    @Override
+    public List<Book> getMultipleBooksFromBookIds(List<String> bookIds){
+        List<Book> books = new ArrayList<>();
+        bookIds.forEach(bookId -> {
+            books.add(getBookByBookId(bookId));
+        });
+        return books;
+    }
 }

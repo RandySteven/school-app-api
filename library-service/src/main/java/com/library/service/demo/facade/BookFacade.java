@@ -15,4 +15,5 @@ public interface BookFacade {
     BookResult getBookResultByBookId(String bookId);
     void deleteBookByBookId(String bookId);
     Book updateBookStatus(String bookId);
+    List<Book> updateMultipleBooksStatus(List<String> bookIds);
 }

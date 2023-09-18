@@ -71,12 +71,15 @@ public class BookFacadeImpl implements BookFacade {
     @Override
     public Book updateBookStatus(String bookId) {
         Book book = bookService.getBookByBookId(bookId);
-        if (book.getBookStatus() == BookStatus.AVAILABLE) {
-            book.setBookStatus(BookStatus.BORROWED);
-        } else {
-            book.setBookStatus(BookStatus.AVAILABLE);
-        }
+        book.setBookStatus(book.getBookStatus() == BookStatus.AVAILABLE ? BookStatus.BORROWED : BookStatus.AVAILABLE);
         bookService.updateBook(book);
         return book;
+    }
+
+    @Override
+    public List<Book> updateMultipleBooksStatus(List<String> bookIds){
+        List<Book> books = bookService.getMultipleBooksFromBookIds(bookIds);
+        bookService.updateMultipleBooksStatus(books);
+        return books;
     }
 }
