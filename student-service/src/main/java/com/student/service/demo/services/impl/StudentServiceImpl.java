@@ -17,11 +17,14 @@ import java.util.List;
 @Service
 public class StudentServiceImpl implements StudentService {
 
-    @Autowired(required = false)
-    StudentRepository studentRepository;
+    private final StudentRepository studentRepository;
 
-    @Autowired(required = false)
-    StudentRequestRepository studentRequestRepository;
+    private final StudentRequestRepository studentRequestRepository;
+
+    public StudentServiceImpl(StudentRepository studentRepository, StudentRequestRepository studentRequestRepository){
+        this.studentRepository = studentRepository;
+        this.studentRequestRepository = studentRequestRepository;
+    }
 
     ErrorHandler errorHandler = ErrorHandler.getInstance();
 

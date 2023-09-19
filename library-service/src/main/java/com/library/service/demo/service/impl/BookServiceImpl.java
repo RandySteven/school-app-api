@@ -16,8 +16,12 @@ import java.util.List;
 @Service
 public class BookServiceImpl implements BookService {
 
-    @Autowired(required = false)
-    BookRepository bookRepository;
+    private final BookRepository bookRepository;
+
+    @Autowired
+    public BookServiceImpl(BookRepository bookRepository){
+        this.bookRepository = bookRepository;
+    }
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BookServiceImpl.class);
 

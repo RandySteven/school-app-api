@@ -12,9 +12,11 @@ import java.util.Optional;
 @Service
 public class StudentRequestServiceImpl implements StudentRequestService {
 
-    @Autowired(required = false)
-    StudentRequestRepository studentRequestRepository;
+    private final StudentRequestRepository studentRequestRepository;
 
+    public StudentRequestServiceImpl(StudentRequestRepository studentRequestRepository){
+        this.studentRequestRepository = studentRequestRepository;
+    }
 
     @Override
     public List<StudentRequest> getAllStudentRequests() {

@@ -1,10 +1,13 @@
 package com.rest.util.demo.utils;
 
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.Map;
 
+@Component
 public class RestUtil {
 
     RestTemplate restTemplate = new RestTemplate();
@@ -21,14 +24,18 @@ public class RestUtil {
 
     public Map<String, Object> getResponseBodyFromResponseEntity(String service, String endpoint){
         String uri = "http://localhost:8181/" + service + "/" + endpoint;
-        Map<String, Object> responseBody = getResponseBodyFromResponseEntity(uri);
-        return responseBody;
+        return getResponseBodyFromResponseEntity(uri);
     }
 
     public Map<String, Object> getResponseBodyFromResponseEntity(String url, String service, String endpoint){
         String uri = url + "/" + service + "/" + endpoint;
-        Map<String, Object> responseBody = getResponseBodyFromResponseEntity(uri);
-        return responseBody;
+        return getResponseBodyFromResponseEntity(uri);
     }
 
+    public Map<String, Object> getResponseBodyFromRequest(Object object, String uri){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        HttpEntity<Object> entity = new HttpEntity<>(object, headers);
+        return restTemplate.exchange(uri, HttpMethod.PATCH, entity, Map.class).getBody();
+    }
 }

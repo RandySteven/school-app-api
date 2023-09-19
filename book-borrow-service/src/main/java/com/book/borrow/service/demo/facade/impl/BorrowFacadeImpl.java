@@ -7,6 +7,7 @@ import com.book.borrow.service.demo.facade.BorrowFacade;
 import com.book.borrow.service.demo.service.BorrowDetailService;
 import com.book.borrow.service.demo.service.BorrowHeaderService;
 import com.book.borrow.service.demo.utils.BorrowUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.library.service.demo.entity.payload.result.BookResult;
 import com.library.service.demo.facade.BookFacade;
 import com.library.service.demo.service.BookService;
@@ -43,6 +44,8 @@ public class BorrowFacadeImpl implements BorrowFacade {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BorrowFacadeImpl.class);
 
+    ObjectMapper objectMapper = new ObjectMapper();
+
     @Override
     public BorrowResult createBorrow(BorrowRequest request) {
         BorrowHeader header = new BorrowHeader();
@@ -52,15 +55,14 @@ public class BorrowFacadeImpl implements BorrowFacade {
         String borrowId = borrowHeaderService.createBorrowHeader(header);
         borrowDetailService.createBorrowDetail(borrowId, request.getBookIds());
         for (String bookId: request.getBookIds()) {
-            restUtil.getResponseBodyFromResponseEntity("http://localhost:8181", "v1/books", "update-status/"+bookId);
+            restUtil.getResponseBodyFromResponseEntity("http://localhost:8181", "v1/books", "/update-book-status");
         }
         return borrowUtil.getBorrowResult(borrowHeaderService.getBorrowByBorrowId(borrowId), request.getBookIds());
     }
 
     @Override
     public List<BookResult> getAllBorrowResults() {
-        List<BookResult> bookResults = new ArrayList<>();
-        return bookResults;
+        return null;
     }
 
     @Override
