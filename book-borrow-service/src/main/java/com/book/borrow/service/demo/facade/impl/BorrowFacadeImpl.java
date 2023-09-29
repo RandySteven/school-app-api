@@ -7,13 +7,13 @@ import com.book.borrow.service.demo.facade.BorrowFacade;
 import com.book.borrow.service.demo.service.BorrowDetailService;
 import com.book.borrow.service.demo.service.BorrowHeaderService;
 import com.book.borrow.service.demo.utils.BorrowUtil;
+import com.book.borrow.service.demo.utils.RestUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.library.service.demo.entity.model.Book;
 import com.library.service.demo.entity.payload.result.BookResult;
 import com.library.service.demo.facade.BookFacade;
-import com.library.service.demo.service.BookService;
 import com.module.common.utils.VelocityUtil;
 import com.netflix.discovery.converters.Auto;
-import com.rest.util.demo.utils.RestUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +23,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class BorrowFacadeImpl implements BorrowFacade {
@@ -33,8 +34,6 @@ public class BorrowFacadeImpl implements BorrowFacade {
     @Autowired
     BorrowHeaderService borrowHeaderService;
 
-    @Autowired
-    BookFacade bookFacade;
 
     BorrowUtil borrowUtil = BorrowUtil.getInstance();
 
@@ -54,10 +53,14 @@ public class BorrowFacadeImpl implements BorrowFacade {
         header.setStudentId(request.getStudentId());
         String borrowId = borrowHeaderService.createBorrowHeader(header);
         borrowDetailService.createBorrowDetail(borrowId, request.getBookIds());
-        for (String bookId: request.getBookIds()) {
-            restUtil.getResponseBodyFromResponseEntity("http://localhost:8181", "v1/books", "/update-book-status");
-        }
-        return borrowUtil.getBorrowResult(borrowHeaderService.getBorrowByBorrowId(borrowId), request.getBookIds());
+        Map<String, Object> bookBorrowStatusUpdate = restUtil.getResponseBodyFromRequest(
+                request.getBookIds(), "bookIds", "http://localhost:8084/v1/books/update-book-status");
+//        vu.debug("books", bookBorrowStatusUpdate.get("books").getClass());
+        return borrowUtil.getBorrowResult(
+                borrowHeaderService.getBorrowByBorrowId(borrowId),
+                request.getBookIds(),
+                bookBorrowStatusUpdate.get("books")
+        );
     }
 
     @Override

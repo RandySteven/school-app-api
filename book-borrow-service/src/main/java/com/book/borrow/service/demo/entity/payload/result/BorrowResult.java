@@ -7,16 +7,16 @@ import java.util.List;
 public class BorrowResult {
 
     private String borrowId;
-    private String studentName;
+    private Object student;
     private String borrowedDate;
     private String returnDate;
-    private List<BookResult> bookResults;
+    private Object bookResults;
 
     public BorrowResult(){}
 
-    public BorrowResult(String borrowId, String studentName, String borrowedDate, String returnDate, List<BookResult> bookResults) {
+    public BorrowResult(String borrowId, Object student, String borrowedDate, String returnDate, Object bookResults) {
         this.borrowId = borrowId;
-        this.studentName = studentName;
+        this.student = student;
         this.borrowedDate = borrowedDate;
         this.returnDate = returnDate;
         this.bookResults = bookResults;
@@ -30,12 +30,12 @@ public class BorrowResult {
         this.borrowId = borrowId;
     }
 
-    public String getStudentName() {
-        return studentName;
+    public Object getStudent() {
+        return student;
     }
 
-    public void setStudentName(String studentName) {
-        this.studentName = studentName;
+    public void setStudent(Object student) {
+        this.student = student;
     }
 
     public String getBorrowedDate() {
@@ -54,11 +54,11 @@ public class BorrowResult {
         this.returnDate = returnDate;
     }
 
-    public List<BookResult> getBookResults() {
+    public Object getBookResults() {
         return bookResults;
     }
 
-    public void setBookResults(List<BookResult> bookResults) {
+    public void setBookResults(Object bookResults) {
         this.bookResults = bookResults;
     }
 }

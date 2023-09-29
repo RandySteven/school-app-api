@@ -7,32 +7,25 @@ import com.book.borrow.service.demo.entity.payload.result.BorrowResult;
 import com.book.borrow.service.demo.enums.BorrowStatus;
 import com.library.service.demo.entity.model.Book;
 import com.library.service.demo.entity.payload.result.BookResult;
-import com.library.service.demo.facade.BookFacade;
-import com.library.service.demo.service.BookService;
 import com.library.service.demo.utils.BookUtil;
 import com.module.common.utils.VelocityUtil;
-import com.student.service.demo.facades.StudentFacade;
-import com.student.service.demo.services.StudentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class BorrowUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BorrowUtil.class);
 
-    @Autowired
-    BookService bookService;
-
-    @Autowired
-    StudentService studentService;
-
     BookUtil bookUtil = BookUtil.getInstance();
 
     VelocityUtil vu = VelocityUtil.getInstance();
+
+    RestUtil restUtil = RestUtil.getInstance();
 
     public static BorrowUtil getInstance(){
         return new BorrowUtil();
@@ -44,17 +37,16 @@ public class BorrowUtil {
         return header;
     }
 
-    public BorrowResult getBorrowResult(BorrowHeader header, List<String> bookIds){
+    public BorrowResult getBorrowResult(BorrowHeader header, List<String> bookIds, Object books){
         List<BookResult> bookResults = new ArrayList<>();
-        for (String bookId: bookIds) {
-            bookResults.add(bookUtil.bookToBookResult(bookService.getBookByBookId(bookId)));
-        }
+        Map<String, Object> studentResult = restUtil.getResponseBodyFromResponseEntity("http://localhost:8081/v1/students/"+header.getStudentId());
+
         return new BorrowResult(
                 header.getBorrowId(),
-                studentService.getStudentByStudentId(header.getStudentId()).getStudentName(),
+                studentResult.get("student"),
                 header.getBorrowedDate().toString(),
                 "",
-                bookResults
+                books
         );
     }
 

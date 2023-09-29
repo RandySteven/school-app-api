@@ -18,8 +18,10 @@ import java.util.List;
 @Service
 public class BookFacadeImpl implements BookFacade {
 
+    @Autowired(required = false)
     private final BookService bookService;
 
+    @Autowired(required = false)
     public BookFacadeImpl(BookService bookService){
         this.bookService = bookService;
     }

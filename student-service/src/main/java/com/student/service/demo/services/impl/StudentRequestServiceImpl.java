@@ -14,6 +14,7 @@ public class StudentRequestServiceImpl implements StudentRequestService {
 
     private final StudentRequestRepository studentRequestRepository;
 
+    @Autowired
     public StudentRequestServiceImpl(StudentRequestRepository studentRequestRepository){
         this.studentRequestRepository = studentRequestRepository;
     }

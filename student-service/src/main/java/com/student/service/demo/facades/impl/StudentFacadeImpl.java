@@ -24,11 +24,15 @@ import java.util.concurrent.CompletableFuture;
 @Service
 public class StudentFacadeImpl implements StudentFacade {
 
-    @Autowired
-    StudentRequestService studentRequestService;
+    private final StudentRequestService studentRequestService;
+
+    private final StudentService studentService;
 
     @Autowired
-    StudentService studentService;
+    public StudentFacadeImpl(StudentRequestService studentRequestService, StudentService studentService){
+        this.studentRequestService = studentRequestService;
+        this.studentService = studentService;
+    }
 
     VelocityUtil vu = VelocityUtil.getInstance();
 
@@ -66,7 +70,8 @@ public class StudentFacadeImpl implements StudentFacade {
         LOGGER.info("==== request : "+ new JSONObject(studentRequest));
         String studentId = studentUtil.generateStudentId(studentRequest, total);
         Student student = studentUtil.studentRequestToStudentModel(studentRequest)
-                .setStudentId(studentId);
+                .setStudentId(studentId)
+                .setStudentPassword(securityUtil.studentHashPassword(studentRequest.getStudentPassword()));
         studentService.registerStudent(student);
         LOGGER.info("===== request student model : " + new JSONObject(student));
         return CompletableFuture.completedFuture(student.getStudentId());

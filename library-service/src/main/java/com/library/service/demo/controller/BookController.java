@@ -6,6 +6,7 @@ import com.library.service.demo.entity.payload.result.BookResult;
 import com.library.service.demo.enums.BookStatus;
 import com.library.service.demo.facade.BookFacade;
 import com.module.common.utils.ResponseUtil;
+import com.module.common.utils.VelocityUtil;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,8 @@ public class BookController {
     Map<String, Object> responseMap;
 
     ResponseEntity<Map<String, Object>> responseEntity;
+
+    VelocityUtil vu = VelocityUtil.getInstance();
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BookController.class);
 
@@ -116,9 +119,10 @@ public class BookController {
         return responseEntity;
     }
 
-    @PatchMapping(UPDATE_BOOK_STATUS_BY_MULTIPLE_REQUEST_BODIES_ENDPOINT)
-    public ResponseEntity<Map<String, Object>> updateBooksStatusByRequestBodies(@RequestBody List<String> bookIds){
+    @GetMapping(UPDATE_BOOK_STATUS_BY_MULTIPLE_REQUEST_BODIES_ENDPOINT)
+    public ResponseEntity<Map<String, Object>> updateBooksStatusByRequestBodies(@RequestParam List<String> bookIds){
         responseMap = new HashMap<>();
+        vu.debug("body", bookIds);
         HttpStatus status = HttpStatus.OK;
         boolean success = true;
         List<Book> books = bookFacade.updateMultipleBooksStatus(bookIds);

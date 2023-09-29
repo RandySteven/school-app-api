@@ -16,9 +16,10 @@ import java.util.List;
 @Service
 public class BookServiceImpl implements BookService {
 
+    @Autowired(required = false)
     private final BookRepository bookRepository;
 
-    @Autowired
+    @Autowired(required = false)
     public BookServiceImpl(BookRepository bookRepository){
         this.bookRepository = bookRepository;
     }
@@ -27,17 +28,20 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book addNewBook(Book book) {
+        LOGGER.info("=== BookService : addNewBook()");
         book.setCreatedAt(LocalDateTime.now());
         return bookRepository.save(book);
     }
 
     @Override
     public List<Book> getAllBooks() {
+        LOGGER.info("=== BookService : getAllBooks()");
         return bookRepository.findAll();
     }
 
     @Override
     public List<Book> getAllBooksByBookStatus(BookStatus status) {
+        LOGGER.info("=== BookService : getAllBooksByBookStatus()");
         List<Book> books = getAllBooks();
         List<Book> filteredBooks = new ArrayList<>();
         books.forEach(book -> {

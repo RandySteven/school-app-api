@@ -38,6 +38,10 @@ public class VelocityUtil implements Serializable {
         LOGGER.info("=== debug : " + d);
     }
 
+    public void debug(String key, Object d){
+        LOGGER.info("=== " + key + " : " + d);
+    }
+
     public String generateAlphaNumeric(int length, boolean lower){
         if(lower){
             return generateAlphaNumericLowerAlphabet(length);
