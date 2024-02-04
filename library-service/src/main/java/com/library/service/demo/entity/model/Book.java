@@ -7,15 +7,9 @@ import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
 
-@Table(name="books")
-@Entity
+
 public class Book {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
-    @JdbcTypeCode(SqlTypes.BIGINT)
-    private Long id;
 
     private String bookId;
     private String bookTitle;
@@ -29,8 +23,7 @@ public class Book {
 
     public Book(){}
 
-    public Book(Long id, String bookId, String bookTitle, String bookDescription, String author, BookStatus bookStatus, LocalDateTime createdAt, LocalDateTime deletedAt) {
-        this.id = id;
+    public Book(String bookId, String bookTitle, String bookDescription, String author, BookStatus bookStatus, LocalDateTime createdAt, LocalDateTime deletedAt) {
         this.bookId = bookId;
         this.bookTitle = bookTitle;
         this.bookDescription = bookDescription;
@@ -38,14 +31,6 @@ public class Book {
         this.bookStatus = bookStatus;
         this.createdAt = createdAt;
         this.deletedAt = deletedAt;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getBookId() {

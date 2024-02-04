@@ -9,6 +9,7 @@ import com.library.service.demo.entity.model.Book;
 import com.library.service.demo.entity.payload.result.BookResult;
 import com.library.service.demo.utils.BookUtil;
 import com.module.common.utils.VelocityUtil;
+import com.student.service.demo.entity.models.Student;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,10 +41,13 @@ public class BorrowUtil {
     public BorrowResult getBorrowResult(BorrowHeader header, List<String> bookIds, Object books){
         List<BookResult> bookResults = new ArrayList<>();
         Map<String, Object> studentResult = restUtil.getResponseBodyFromResponseEntity("http://localhost:8081/v1/students/"+header.getStudentId());
-
+        Student student = null;
+        if(studentResult.get("student") instanceof Student){
+            student = (Student) studentResult.get("student");
+        }
         return new BorrowResult(
                 header.getBorrowId(),
-                studentResult.get("student"),
+                student.getStudentName(),
                 header.getBorrowedDate().toString(),
                 "",
                 books

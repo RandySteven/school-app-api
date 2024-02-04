@@ -48,14 +48,11 @@ public class BorrowFacadeImpl implements BorrowFacade {
     @Override
     public BorrowResult createBorrow(BorrowRequest request) {
         BorrowHeader header = new BorrowHeader();
-        vu.debug(request.getStudentId());
-        vu.debug(request.getBookIds());
         header.setStudentId(request.getStudentId());
         String borrowId = borrowHeaderService.createBorrowHeader(header);
         borrowDetailService.createBorrowDetail(borrowId, request.getBookIds());
         Map<String, Object> bookBorrowStatusUpdate = restUtil.getResponseBodyFromRequest(
                 request.getBookIds(), "bookIds", "http://localhost:8084/v1/books/update-book-status");
-//        vu.debug("books", bookBorrowStatusUpdate.get("books").getClass());
         return borrowUtil.getBorrowResult(
                 borrowHeaderService.getBorrowByBorrowId(borrowId),
                 request.getBookIds(),

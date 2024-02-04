@@ -1,6 +1,7 @@
 package com.library.service.demo.utils;
 
 import com.library.service.demo.entity.model.Book;
+import com.library.service.demo.entity.model.BookSQL;
 import com.library.service.demo.entity.payload.request.BookRequest;
 import com.library.service.demo.entity.payload.result.BookResult;
 import com.module.common.utils.VelocityUtil;
@@ -44,6 +45,24 @@ public class BookUtil implements Serializable {
             }
         });
         return results;
+    }
+
+    public Book bookSQLToBook(BookSQL bookSQL) {
+        Book book = new Book();
+        book.setBookId(bookSQL.getBookId());
+        book.setBookTitle(bookSQL.getBookTitle());
+        book.setBookStatus(bookSQL.getBookStatus());
+        book.setAuthor(bookSQL.getAuthor());
+        book.setBookDescription(bookSQL.getBookDescription());
+        return book;
+    }
+
+    public List<Book> bookSQLsToBooks(List<BookSQL> bookSQLS){
+        List<Book> books = new ArrayList<>();
+        bookSQLS.forEach(bookSQL -> {
+            books.add(bookSQLToBook(bookSQL));
+        });
+        return books;
     }
 
     public Book bookRequestToBook(BookRequest request){
